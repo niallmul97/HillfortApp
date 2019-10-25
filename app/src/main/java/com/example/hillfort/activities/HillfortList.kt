@@ -1,5 +1,7 @@
 package com.example.hillfort.activities
 
+import adapters.HillfortAdapter
+import adapters.HillfortListener
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.example.hillfort.R
 import com.example.hillfort.helpers.readImage
 import com.example.hillfort.helpers.readImageFromPath
@@ -21,6 +22,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     var hillfort = HillfortModel()
     lateinit var app : MainApp
     val IMAGE_REQUEST = 1
+    var imageIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,20 +33,16 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         setSupportActionBar(toolbarAdd)
         info("Hillfort Activity started..")
 
-        toolbarAdd.title = title
-        setSupportActionBar(toolbarAdd)
-
         if (intent.hasExtra("hillfort_edit")) {
             edit = true
             hillfort = intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
             hillfortTitle.setText(hillfort.title)
             hillfortDescription.setText(hillfort.description)
             btnAdd.setText(R.string.save_hillfort)
-            hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
-            if (hillfort.image != null) {
+            if (hillfort.image.size > 0) {
                 chooseImage.setText(R.string.change_hillfort_image)
+                hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image[imageIndex]))
             }
-            hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
         }
 
         btnAdd.setOnClickListener() {
@@ -64,10 +62,32 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             finish()
         }
 
+        hillfortImage.setOnClickListener {
+            if (hillfort.image.size != 0){
+                imageIndex+=1
+                if (imageIndex == hillfort.image.size){
+                    imageIndex = 0
+                }
+                hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image[imageIndex]))
+                hillfortImage.scaleType = hillfortImage.scaleType
+            }
+        }
+
+        btnDeleteImage.setOnClickListener() {
+            hillfort.image.removeAt(imageIndex)
+            imageIndex = 0
+            if (hillfort.image.size == 0){
+                hillfortImage.visibility = View.INVISIBLE
+                btnDeleteImage.visibility = View.INVISIBLE
+            }else
+            hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image[imageIndex]))
+        }
+
         chooseImage.setOnClickListener {
             showImagePicker(this, IMAGE_REQUEST)
         }
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_hillfort, menu)
         return super.onCreateOptionsMenu(menu)
@@ -87,7 +107,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         when (requestCode) {
             IMAGE_REQUEST -> {
                 if (data != null) {
-                    hillfort.image = data.getData().toString()
+                    hillfort.image.add(data.getData().toString())
                     hillfortImage.setImageBitmap(readImage(this, resultCode, data))
                     chooseImage.setText(R.string.change_hillfort_image)
                 }

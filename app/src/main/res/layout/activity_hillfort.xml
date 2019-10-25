@@ -86,7 +86,20 @@
                     android:id="@+id/hillfortImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@mipmap/ic_launcher" />
+
+                <Button
+                    android:id="@+id/btnDeleteImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@color/colorAccent"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/button_deleteImage"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/btnAdd"
