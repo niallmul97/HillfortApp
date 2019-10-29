@@ -43,13 +43,17 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfortDescription.setText(hillfort.description)
             btnAdd.setText(R.string.save_hillfort)
             btnDeleteImage.visibility = View.VISIBLE
+            hillFortLocationDisplay.visibility == View.VISIBLE
             if (hillfort.image.size > 0) {
                 chooseImage.setText(R.string.change_hillfort_image)
                 hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image[imageIndex]))
             }
+            var strLocation = "Latitude: " + hillfort.location.lat.toString() + "\nLongitude: " +hillfort.location.lng.toString() + "\nZoom: " +hillfort.location.zoom.toString()
+            hillFortLocationDisplay.text = strLocation
         }
 
         btnDeleteImage.visibility == View.GONE
+        hillFortLocationDisplay.visibility == View.GONE
 
         btnAdd.setOnClickListener() {
             hillfort.title = hillfortTitle.text.toString()
@@ -134,6 +138,8 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                     hillfort.location.lat = location.lat
                     hillfort.location.lng = location.lng
                     hillfort.location.zoom = location.zoom
+                    var strLocation = "Latitude: " + hillfort.location.lat.toString() + "\nLongitude: " +hillfort.location.lng.toString() + "\nZoom: " +hillfort.location.zoom.toString()
+                    hillFortLocationDisplay.text = strLocation
                 }
             }
         }
