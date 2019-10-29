@@ -16,6 +16,7 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import com.example.hillfort.models.HillfortModel
+import com.example.hillfort.models.Location
 import org.jetbrains.anko.intentFor
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
@@ -24,6 +25,8 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     lateinit var app : MainApp
     val IMAGE_REQUEST = 1
     var imageIndex = 0
+    val LOCATION_REQUEST = 2
+    var location = Location(52.245696, -7.139102, 15f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,7 +95,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         }
 
         hillfortLocation.setOnClickListener {
-            startActivity(intentFor<MapsActivity>())
+            startActivityForResult(intentFor<MapsActivity>().putExtra("location", location), LOCATION_REQUEST)
             info ("Set Location Pressed")
         }
     }
@@ -119,6 +122,11 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                     hillfort.image.add(data.getData().toString())
                     hillfortImage.setImageBitmap(readImage(this, resultCode, data))
                     chooseImage.setText(R.string.change_hillfort_image)
+                }
+            }
+            LOCATION_REQUEST -> {
+                if (data != null) {
+                    location = data.extras?.getParcelable<Location>("location")!!
                 }
             }
         }
