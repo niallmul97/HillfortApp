@@ -39,11 +39,14 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfortTitle.setText(hillfort.title)
             hillfortDescription.setText(hillfort.description)
             btnAdd.setText(R.string.save_hillfort)
+            btnDeleteImage.visibility = View.VISIBLE
             if (hillfort.image.size > 0) {
                 chooseImage.setText(R.string.change_hillfort_image)
                 hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image[imageIndex]))
             }
         }
+
+        btnDeleteImage.visibility == View.GONE
 
         btnAdd.setOnClickListener() {
             hillfort.title = hillfortTitle.text.toString()
@@ -80,7 +83,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                 hillfortImage.visibility = View.INVISIBLE
                 btnDeleteImage.visibility = View.INVISIBLE
             }else
-            hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image[imageIndex]))
+                hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image[imageIndex]))
         }
 
         chooseImage.setOnClickListener {
