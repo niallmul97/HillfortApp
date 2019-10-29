@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hillfort.R
 import com.example.hillfort.helpers.readImageFromPath
 import com.example.hillfort.models.HillfortModel
+import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.card_hillfort.view.*
 
 interface HillfortListener {
@@ -40,6 +41,8 @@ class HillfortAdapter constructor(
             itemView.imageIcon.visibility = View.VISIBLE
             itemView.hillfortTitle.text = hillfort.title
             itemView.hillfortDescription.text = hillfort.description
+            var strLocation = "Latitude: " + hillfort.location.lat.toString() + "\nLongitude: " +hillfort.location.lng.toString() + "\nZoom: " +hillfort.location.zoom.toString()
+            itemView.hillFortLocationDisplay.text = strLocation
             if (hillfort.image.size > 0){
                 itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, hillfort.image[0]))
             }

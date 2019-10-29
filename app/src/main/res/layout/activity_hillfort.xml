@@ -127,6 +127,35 @@
                 android:textSize="16sp"
                 android:visibility="invisible" />
 
+            <CheckBox
+                android:id="@+id/hillFortVisited"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="8dp"
+                android:maxLength="25"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:text="@string/checkboxHillFortVisited"
+                android:textColor="@color/colorPrimary"
+                android:buttonTint="@color/colorPrimary"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/hillFortDateVisited"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="8dp"
+                android:autofillHints=""
+                android:hint="@string/visitDate"
+                android:maxLength="25"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary"
+                android:textSize="14sp"
+                android:ems="10"
+                android:inputType="date" />
+
             <Button
                 android:id="@+id/btnAdd"
                 android:layout_width="match_parent"

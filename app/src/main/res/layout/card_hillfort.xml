@@ -27,6 +27,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/hillfortTitle" />
 
+        <TextView
+            android:id="@+id/hillFortLocationDisplay"
+            android:textColor="@color/colorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hillfortDescription" />
+
         <ImageView
             android:id="@+id/imageIcon"
             android:layout_width="110dp"
@@ -37,5 +44,19 @@
             android:layout_marginStart="285dp"
             android:layout_marginEnd="0dp"
             android:contentDescription="@string/change_hillfort_image" />
+
+        <CheckBox
+            android:id="@+id/hillFortVisited"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="8dp"
+            android:maxLength="25"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:text="@string/checkboxHillFortVisited"
+            android:textColor="@color/colorPrimary"
+            android:buttonTint="@color/colorPrimary"
+            android:textSize="14sp"
+            android:layout_below="@id/hillfortDescription" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

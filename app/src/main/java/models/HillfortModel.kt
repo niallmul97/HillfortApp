@@ -8,6 +8,8 @@ data class HillfortModel(var id: Long = 0,
                          var title: String = "",
                          var image: ArrayList<String> = ArrayList(),
                          var description: String = "",
+                         var visited: Boolean = false,
+                         var notes: ArrayList<String> = ArrayList(),
                          var location: Location = Location()) : Parcelable
 
 @Parcelize
