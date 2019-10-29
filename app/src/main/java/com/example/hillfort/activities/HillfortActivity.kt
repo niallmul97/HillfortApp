@@ -26,7 +26,6 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     val IMAGE_REQUEST = 1
     var imageIndex = 0
     val LOCATION_REQUEST = 2
-    var location = Location(52.245696, -7.139102, 15f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,8 +94,13 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         }
 
         hillfortLocation.setOnClickListener {
+            val location = Location(52.245696, -7.139102, 15f)
+            if (hillfort.location.zoom != 0f) {
+                location.lat =  hillfort.location.lat
+                location.lng = hillfort.location.lng
+                location.zoom = hillfort.location.zoom
+            }
             startActivityForResult(intentFor<MapsActivity>().putExtra("location", location), LOCATION_REQUEST)
-            info ("Set Location Pressed")
         }
     }
 
@@ -126,7 +130,10 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             }
             LOCATION_REQUEST -> {
                 if (data != null) {
-                    location = data.extras?.getParcelable<Location>("location")!!
+                    val location = data.extras?.getParcelable<Location>("location")!!
+                    hillfort.location.lat = location.lat
+                    hillfort.location.lng = location.lng
+                    hillfort.location.zoom = location.zoom
                 }
             }
         }
