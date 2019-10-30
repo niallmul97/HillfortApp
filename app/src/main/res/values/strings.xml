@@ -16,4 +16,5 @@
     <string name="blank_location">No location set</string>
     <string name="checkboxHillFortVisited">Visited</string>
     <string name="visitDate">Date Visited</string>
+    <string name="menu_deleteHillfort">Delete Hillfort</string>
 </resources>

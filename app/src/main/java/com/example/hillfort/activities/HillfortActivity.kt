@@ -1,11 +1,13 @@
 package com.example.hillfort.activities
 
 import android.content.Intent
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import com.example.hillfort.R
 import com.example.hillfort.helpers.readImage
 import com.example.hillfort.helpers.readImageFromPath
@@ -39,6 +41,10 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         app = application as MainApp
         toolbarAdd.title = title
         setSupportActionBar(toolbarAdd)
+
+        //val moveLocationMenuItem = findViewById<View>(R.id.hillfort_delete)
+        val moveLocationMenuItem = findViewById<ViewGroup>(R.id.menuGroup)
+
         info("Hillfort Activity started..")
 
         if (intent.hasExtra("hillfort_edit")) {
@@ -48,7 +54,6 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfortDescription.setText(hillfort.description)
             btnAdd.setText(R.string.save_hillfort)
             btnDeleteImage.visibility = View.VISIBLE
-
             if (hillfortLocation != null){
                 hillFortLocationDisplay.visibility = View.VISIBLE
             }
@@ -69,6 +74,13 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
             var strLocation = "Latitude: " + hillfort.location.lat.toString() + "\nLongitude: " +hillfort.location.lng.toString() + "\nZoom: " +hillfort.location.zoom.toString()
             hillFortLocationDisplay.text = strLocation
+        }
+
+
+
+        toolbarAdd.setOnClickListener{
+            app.hillforts.delete(hillfort)
+            finish()
         }
 
         btnAdd.setOnClickListener() {
@@ -134,7 +146,14 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        if (intent.hasExtra("hillfort_edit")) {
+            menu.setGroupVisible(R.id.menuGroup, true)
+        }
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_hillfort, menu)
         return super.onCreateOptionsMenu(menu)
     }
@@ -142,6 +161,10 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.item_cancel -> {
+                finish()
+            }
+            R.id.hillfort_delete -> {
+                app.hillforts.delete(hillfort)
                 finish()
             }
         }
