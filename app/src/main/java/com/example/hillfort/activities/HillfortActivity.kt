@@ -17,6 +17,11 @@ import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import com.example.hillfort.models.HillfortModel
 import com.example.hillfort.models.Location
+import kotlinx.android.synthetic.main.activity_hillfort.hillFortLocationDisplay
+import kotlinx.android.synthetic.main.activity_hillfort.hillFortVisited
+import kotlinx.android.synthetic.main.activity_hillfort.hillfortDescription
+import kotlinx.android.synthetic.main.activity_hillfort.hillfortTitle
+import kotlinx.android.synthetic.main.card_hillfort.*
 import org.jetbrains.anko.intentFor
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
@@ -43,25 +48,33 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfortDescription.setText(hillfort.description)
             btnAdd.setText(R.string.save_hillfort)
             btnDeleteImage.visibility = View.VISIBLE
-            hillFortLocationDisplay.visibility == View.VISIBLE
-            if (!hillFortVisited.isChecked) {
-                hillFortDateVisited.visibility = View.INVISIBLE
-            } else
+
+            if (hillfortLocation != null){
+                hillFortLocationDisplay.visibility = View.VISIBLE
+            }
+
+            if (hillfort.visited) {
+                hillFortVisited.isChecked = true
+                hillFortDateVisited.setText(hillfort.dateVisited)
                 hillFortDateVisited.visibility = View.VISIBLE
+            } else
+                hillFortDateVisited.visibility = View.GONE
+
             if (hillfort.image.size > 0) {
                 chooseImage.setText(R.string.change_hillfort_image)
                 hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image[imageIndex]))
+            } else if (hillfort.image.size == 0){
+                btnDeleteImage.visibility = View.GONE
             }
+
             var strLocation = "Latitude: " + hillfort.location.lat.toString() + "\nLongitude: " +hillfort.location.lng.toString() + "\nZoom: " +hillfort.location.zoom.toString()
             hillFortLocationDisplay.text = strLocation
         }
-        hillFortDateVisited.visibility = View.INVISIBLE
-        btnDeleteImage.visibility == View.GONE
-        hillFortLocationDisplay.visibility == View.GONE
 
         btnAdd.setOnClickListener() {
             hillfort.title = hillfortTitle.text.toString()
             hillfort.description = hillfortDescription.text.toString()
+            hillfort.dateVisited = hillFortDateVisited.text.toString()
             if (hillfort.title.isEmpty()) {
                 toast(R.string.enter_hillfort_title)
             } else {
@@ -72,6 +85,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                 }
             }
             info("add Button Pressed: $hillfortTitle")
+            info("$hillfort")
             setResult(AppCompatActivity.RESULT_OK)
             finish()
         }
@@ -83,7 +97,6 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                     imageIndex = 0
                 }
                 hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image[imageIndex]))
-                hillfortImage.scaleType = hillfortImage.scaleType
             }
         }
 
@@ -91,8 +104,8 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfort.image.removeAt(imageIndex)
             imageIndex = 0
             if (hillfort.image.size == 0){
-                hillfortImage.visibility = View.INVISIBLE
-                btnDeleteImage.visibility = View.INVISIBLE
+                hillfortImage.visibility = View.GONE
+                btnDeleteImage.visibility = View.GONE
             }else
                 hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image[imageIndex]))
         }
@@ -112,9 +125,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         }
 
         hillFortVisited.setOnClickListener{
-            hillfort.visited = hillFortVisited.isChecked
+            hillfort.visited = hillFortVisited.isChecked.toString().toBoolean()
             if (!hillFortVisited.isChecked){
-                hillFortDateVisited.visibility = View.INVISIBLE
+                hillFortDateVisited.visibility = View.GONE
             }
             else
                 hillFortDateVisited.visibility = View.VISIBLE
@@ -143,6 +156,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                     hillfort.image.add(data.getData().toString())
                     hillfortImage.setImageBitmap(readImage(this, resultCode, data))
                     chooseImage.setText(R.string.change_hillfort_image)
+                    btnDeleteImage.visibility = View.VISIBLE
                 }
             }
             LOCATION_REQUEST -> {
@@ -153,6 +167,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                     hillfort.location.zoom = location.zoom
                     var strLocation = "Latitude: " + hillfort.location.lat.toString() + "\nLongitude: " +hillfort.location.lng.toString() + "\nZoom: " +hillfort.location.zoom.toString()
                     hillFortLocationDisplay.text = strLocation
+                    hillFortLocationDisplay.visibility = View.VISIBLE
                 }
             }
         }

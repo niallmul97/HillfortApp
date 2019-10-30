@@ -8,7 +8,12 @@ import com.example.hillfort.R
 import com.example.hillfort.helpers.readImageFromPath
 import com.example.hillfort.models.HillfortModel
 import kotlinx.android.synthetic.main.activity_hillfort.*
+import kotlinx.android.synthetic.main.activity_hillfort.view.*
 import kotlinx.android.synthetic.main.card_hillfort.view.*
+import kotlinx.android.synthetic.main.card_hillfort.view.hillFortLocationDisplay
+import kotlinx.android.synthetic.main.card_hillfort.view.hillFortVisited
+import kotlinx.android.synthetic.main.card_hillfort.view.hillfortDescription
+import kotlinx.android.synthetic.main.card_hillfort.view.hillfortTitle
 
 interface HillfortListener {
     fun onHillfortClick(hillfort: HillfortModel)
@@ -43,6 +48,7 @@ class HillfortAdapter constructor(
             itemView.hillfortDescription.text = hillfort.description
             var strLocation = "Latitude: " + hillfort.location.lat.toString() + "\nLongitude: " +hillfort.location.lng.toString() + "\nZoom: " +hillfort.location.zoom.toString()
             itemView.hillFortLocationDisplay.text = strLocation
+            itemView.hillFortVisited.isChecked = hillfort.visited
             if (hillfort.image.size > 0){
                 itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, hillfort.image[0]))
             }

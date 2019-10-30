@@ -51,14 +51,15 @@
                 android:paddingBottom="8dp"
                 android:stateListAnimator="@null"
                 android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/hillfortLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:background="@color/colorAccent"
+                android:background="@drawable/rounded_button"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:stateListAnimator="@null"
@@ -100,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:background="@color/colorAccent"
+                android:background = "@drawable/rounded_button"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:text="@string/button_addImage"
@@ -119,13 +120,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:background="@color/colorAccent"
+                android:background = "@drawable/rounded_button"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:text="@string/button_deleteImage"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
-                android:visibility="invisible" />
+                android:visibility="gone" />
 
             <CheckBox
                 android:id="@+id/hillFortVisited"
@@ -154,14 +155,15 @@
                 android:textColorHint="@color/colorPrimary"
                 android:textSize="14sp"
                 android:ems="10"
-                android:inputType="date" />
+                android:inputType="date"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btnAdd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:background="@color/colorAccent"
+                android:background = "@drawable/rounded_button"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:stateListAnimator="@null"

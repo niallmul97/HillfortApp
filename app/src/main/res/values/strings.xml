@@ -13,7 +13,7 @@
     <string name="change_hillfort_image">Add another image</string>
     <string name="button_location">Set Location</string>
     <string name="title_activity_maps">Map</string>
-    <string name="blank_location">blank_location</string>
-    <string name="checkboxHillFortVisited">checkboxHillFortVisited</string>
-    <string name="visitDate">visitDate</string>
+    <string name="blank_location">No location set</string>
+    <string name="checkboxHillFortVisited">Visited</string>
+    <string name="visitDate">Date Visited</string>
 </resources>
