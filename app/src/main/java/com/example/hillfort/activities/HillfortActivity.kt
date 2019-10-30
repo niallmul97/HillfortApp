@@ -79,7 +79,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
 
         toolbarAdd.setOnClickListener{
-            app.hillforts.delete(hillfort)
+            app.users.deleteHillfort(app.currentUser, hillfort)
             finish()
         }
 
@@ -91,9 +91,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                 toast(R.string.enter_hillfort_title)
             } else {
                 if (edit) {
-                    app.hillforts.update(hillfort.copy())
+                    app.users.updateHillfort(app.currentUser, hillfort.copy())
                 } else {
-                    app.hillforts.create(hillfort.copy())
+                    app.users.createHillfort(app.currentUser, hillfort.copy())
                 }
             }
             info("add Button Pressed: $hillfortTitle")
@@ -164,7 +164,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                 finish()
             }
             R.id.hillfort_delete -> {
-                app.hillforts.delete(hillfort)
+                app.users.deleteHillfort(app.currentUser, hillfort)
                 finish()
             }
         }

@@ -1,4 +1,4 @@
-package models
+/**package models
 
 import android.content.Context
 import com.example.hillfort.models.HillfortModel
@@ -29,26 +29,26 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
     constructor (context: Context) {
         this.context = context
         if (exists(context, JSON_FILE)) {
-            deserialize()
+            deserializeHillfort()
         }
     }
 
-    override fun findAll(): MutableList<HillfortModel> {
+    override fun findAllHillforts(): MutableList<HillfortModel> {
         return hillforts
     }
 
-    override fun create(hillfort: HillfortModel) {
+    override fun createHillfort(hillfort: HillfortModel) {
         hillfort.id = generateRandomId()
         hillforts.add(hillfort)
-        serialize()
+        serializeHillfort()
     }
 
-    override fun delete(hillfort: HillfortModel) {
+    override fun deleteHillfort(hillfort: HillfortModel) {
         hillforts.remove(hillfort)
-        serialize()
+        serializeHillfort()
     }
 
-    override fun update(hillfort: HillfortModel) {
+    override fun updateHillfort(hillfort: HillfortModel) {
         var foundHillfort: HillfortModel? = hillforts.find { p -> p.id == hillfort.id }
         if (foundHillfort != null) {
             foundHillfort.title = hillfort.title
@@ -60,21 +60,21 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
             foundHillfort.location.lat = hillfort.location.lat
             foundHillfort.location.lng = hillfort.location.lng
             foundHillfort.location.zoom = hillfort.location.zoom
-            logAll()
+            logAllHillforts()
         }
     }
 
-    fun logAll() {
+    fun logAllHillforts() {
         hillforts.forEach{ info("${it}") }
     }
 
-    private fun serialize() {
+    private fun serializeHillfort() {
         val jsonString = gsonBuilder.toJson(hillforts, listType)
         write(context, JSON_FILE, jsonString)
     }
 
-    private fun deserialize() {
+    private fun deserializeHillfort() {
         val jsonString = read(context, JSON_FILE)
         hillforts = Gson().fromJson(jsonString, listType)
     }
-}
+}**/

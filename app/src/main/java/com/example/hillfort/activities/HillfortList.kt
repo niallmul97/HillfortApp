@@ -50,7 +50,7 @@ class HillfortList : AppCompatActivity(), HillfortListener {
     }
 
     private fun loadHillforts() {
-        showHillforts(app.hillforts.findAll())
+        showHillforts(app.users.findAllHillforts(app.currentUser))
     }
 
     fun showHillforts (hillforts: List<HillfortModel>) {
