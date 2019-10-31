@@ -16,4 +16,11 @@
     <string name="blank_location">No location set</string>
     <string name="checkboxHillFortVisited">Visited</string>
     <string name="visitDate">Date Visited</string>
+    <string name="menu_deleteHillfort">Delete Hillfort</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_dropdown">menu_dropdown</string>
+    <string name="updateEmail">Update Email</string>
+    <string name="updatePassword">Update Password</string>
 </resources>

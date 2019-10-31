@@ -7,4 +7,22 @@
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/menu_addHillfort"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_dropdown"
+        android:title="@string/menu_dropdown"
+        android:icon="@drawable/ic_menu_icon"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/settings"
+                android:title="@string/menu_settings"
+                app:showAsAction="always"/>
+
+            <item
+                android:id="@+id/logout"
+                android:title="@string/menu_logout"
+                app:showAsAction="always"/>
+        </menu>
+    </item>
 </menu>

@@ -28,7 +28,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         toolbarMaps.title = title
         setSupportActionBar(toolbarMaps)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        toolbarMaps
         location = intent.extras?.getParcelable<Location>("location")!!
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
