@@ -116,6 +116,7 @@ class UserJSONStore : UserStore, AnkoLogger {
             foundHillfort.location.lng = hillfort.location.lng
             foundHillfort.location.zoom = hillfort.location.zoom
             logAllHillforts(user)
+            serialize()
         }
     }
 
