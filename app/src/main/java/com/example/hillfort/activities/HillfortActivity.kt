@@ -2,6 +2,7 @@ package com.example.hillfort.activities
 
 import android.content.Intent
 import android.opengl.Visibility
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -25,6 +26,8 @@ import kotlinx.android.synthetic.main.activity_hillfort.hillfortDescription
 import kotlinx.android.synthetic.main.activity_hillfort.hillfortTitle
 import kotlinx.android.synthetic.main.card_hillfort.*
 import org.jetbrains.anko.intentFor
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
@@ -81,6 +84,21 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfort.title = hillfortTitle.text.toString()
             hillfort.description = hillfortDescription.text.toString()
             hillfort.dateVisited = hillFortDateVisited.text.toString()
+
+            //var checkDate = false
+            //try {
+            //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            //        LocalDate.parse(hillFortDateVisited.text.toString(), DateTimeFormatter.ISO_DATE)
+            //       checkDate = true
+            //    }
+            //}catch (e: Exception) {
+            //    info { e }
+            //}
+            //if (checkDate || !hillfort.visited){
+            //   hillfort.dateVisited = hillFortDateVisited.text.toString()
+            //} else
+            //    toast("Please enter a valid date")
+
             if (hillfort.title.isEmpty()) {
                 toast(R.string.enter_hillfort_title)
             } else {

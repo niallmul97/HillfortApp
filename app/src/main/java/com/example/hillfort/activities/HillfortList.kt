@@ -14,6 +14,7 @@ import com.example.hillfort.models.HillfortModel
 import com.example.hillfort.models.UserModel
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import org.jetbrains.anko.toast
 
@@ -52,6 +53,9 @@ class HillfortList : AppCompatActivity(), HillfortListener {
                 toast("Logout Successful")
                 startActivityForResult<LoginActivity>(0)
                 finish()
+            }
+            R.id.settings ->{
+                startActivity<SettingsActivity>()
             }
         }
         return super.onOptionsItemSelected(item)

@@ -32,8 +32,8 @@ class LoginActivity : AppCompatActivity(), AnkoLogger {
                         app.currentUser = currentUser
                         startActivity(intentFor<HillfortList>())
                     }
-                }
-            } else (toast("Please enter a correct Email and Password"))
+                }else (toast("Please enter a correct Email and Password"))
+            }
         }
         buttonRegister.setOnClickListener{
             if (editEmail != null && editPassword != null){
@@ -48,8 +48,8 @@ class LoginActivity : AppCompatActivity(), AnkoLogger {
                             app.currentUser = currentUser
                             startActivity(intentFor<HillfortList>())
                         }
-                    }
-                } else (toast("A user with that email already exists"))
+                    }else (toast("A user with that email already exists"))
+                }
             }
         }
     }
