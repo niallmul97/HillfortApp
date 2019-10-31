@@ -23,4 +23,5 @@
     <string name="menu_dropdown">menu_dropdown</string>
     <string name="updateEmail">Update Email</string>
     <string name="updatePassword">Update Password</string>
+    <string name="notes">Notes…</string>
 </resources>

@@ -61,6 +61,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfortDescription.setText(hillfort.description)
             btnAdd.setText(R.string.save_hillfort)
             btnDeleteImage.visibility = View.VISIBLE
+            notes.setText(hillfort.notes)
             if (hillfortLocation != null){
                 hillFortLocationDisplay.visibility = View.VISIBLE
             }
@@ -83,8 +84,10 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                     } else
                         toast("Please enter a valid date")
                 }
-            } else
+            } else{
                 hillFortDateVisited.visibility = View.GONE
+                hillfort.dateVisited = ""
+            }
 
             if (hillfort.image.size > 0) {
                 chooseImage.setText(R.string.change_hillfort_image)
@@ -106,19 +109,25 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         btnAdd.setOnClickListener() {
             hillfort.title = hillfortTitle.text.toString()
             hillfort.description = hillfortDescription.text.toString()
+            hillfort.notes = notes.text.toString()
 
-            var date = hillFortDateVisited.text.toString()
-            try {
-                formatter.parse(date)
-                checkDate = true
+            if (hillFortVisited.isChecked){
+                val date = hillFortDateVisited.text.toString()
+                try {
+                    formatter.parse(date)
+                    checkDate = true
 
-            } catch (e: ParseException) {
-                e.printStackTrace()
+                } catch (e: ParseException) {
+                    e.printStackTrace()
+                }
+                if (checkDate){
+                    hillfort.dateVisited = date
+                } else
+                    toast("Please enter a valid date")
+            } else{
+                hillFortDateVisited.visibility = View.GONE
+                hillfort.dateVisited = ""
             }
-            if (checkDate){
-               hillfort.dateVisited = date
-            } else
-                toast("Please enter a valid date")
 
             if (hillfort.title.isEmpty()) {
                 toast(R.string.enter_hillfort_title)

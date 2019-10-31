@@ -10,7 +10,7 @@ data class HillfortModel(var id: Long = 0,
                          var description: String = "",
                          var visited: Boolean = false,
                          var dateVisited: String = "",
-                         var notes: ArrayList<String> = ArrayList(),
+                         var notes: String = "",
                          var location: Location = Location()) : Parcelable
 
 @Parcelize

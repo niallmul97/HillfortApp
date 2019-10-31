@@ -41,24 +41,30 @@ class SettingsActivity : AppCompatActivity(), AnkoLogger {
         }
         displayTotalImages.setText("Total Images: "+imageCount)
 
-
         var allDates: ArrayList<Date?> = ArrayList()
         app.currentUser.hillforts.forEach{
-            allDates.add(formatter.parse(it.dateVisited))
+            if (it.dateVisited != ""){
+                allDates.add(formatter.parse(it.dateVisited))
+            }
         }
-        var oldestVisited = allDates[0]
-        var newestVisited = allDates[0]
+        if (allDates.size > 0){
+            var oldestVisited = allDates[0]
+            var newestVisited = allDates[0]
+            for (i in allDates){
+                if (i!!.before(oldestVisited)){
+                    oldestVisited = i
+                }
+                if (i.after(newestVisited)){
+                    newestVisited = i
+                }
+            }
+            displayMostRecentlyVisited.setText("Most Recent Hillfort Visit: "+newestVisited)
+            displayOldestVisited.setText("Oldest Hillfort Visit: "+oldestVisited)
+        }else{
+            displayMostRecentlyVisited.setText("Most Recent Hillfort Visit: N/A")
+            displayOldestVisited.setText("Oldest Hillfort Visit: N/A")
+        }
 
-        for (i in allDates){
-            if (i!!.before(oldestVisited)){
-                oldestVisited = i
-            }
-            if (i.after(newestVisited)){
-                newestVisited = i
-            }
-        }
-        displayMostRecentlyVisited.setText("Most Recent Hillfort Visit: "+newestVisited)
-        displayOldestVisited.setText("Oldest Hillfort Visit: "+oldestVisited)
 
         updateEmail.setOnClickListener {
             var newEmail = ""

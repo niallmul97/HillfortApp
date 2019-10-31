@@ -34,8 +34,10 @@
         android:layout_marginTop="56dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintVertical_bias="0.357">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,7 +54,7 @@
                 android:stateListAnimator="@null"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/hillfortLocation"
@@ -101,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:background = "@drawable/rounded_button"
+                android:background="@drawable/rounded_button"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:text="@string/button_addImage"
@@ -120,7 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:background = "@drawable/rounded_button"
+                android:background="@drawable/rounded_button"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:text="@string/button_deleteImage"
@@ -133,12 +135,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_margin="8dp"
+                android:buttonTint="@color/colorPrimary"
                 android:maxLength="25"
                 android:maxLines="1"
                 android:padding="8dp"
                 android:text="@string/checkboxHillFortVisited"
                 android:textColor="@color/colorPrimary"
-                android:buttonTint="@color/colorPrimary"
                 android:textSize="14sp" />
 
             <EditText
@@ -147,23 +149,36 @@
                 android:layout_height="45dp"
                 android:layout_margin="8dp"
                 android:autofillHints=""
+                android:ems="10"
                 android:hint="@string/visitDate"
+                android:inputType="date"
                 android:maxLength="25"
                 android:maxLines="1"
                 android:padding="8dp"
                 android:textColor="@color/colorPrimary"
                 android:textColorHint="@color/colorPrimary"
                 android:textSize="14sp"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:ems="10"
-                android:inputType="date"
-                android:visibility="gone"/>
+                android:gravity="start|top"
+                android:hint="@string/notes"
+                android:inputType="textMultiLine"
+                android:padding="8dp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/btnAdd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:background = "@drawable/rounded_button"
+                android:background="@drawable/rounded_button"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:stateListAnimator="@null"
