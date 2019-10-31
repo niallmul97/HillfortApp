@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.example.hillfort.R
 import com.example.hillfort.helpers.readImage
 import com.example.hillfort.helpers.readImageFromPath
@@ -68,6 +69,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                 chooseImage.setText(R.string.change_hillfort_image)
                 hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image[imageIndex]))
             } else if (hillfort.image.size == 0){
+                hillfortImage.setImageDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.ic_launcher_round))
                 btnDeleteImage.visibility = View.GONE
             }
 
@@ -85,19 +87,19 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfort.description = hillfortDescription.text.toString()
             hillfort.dateVisited = hillFortDateVisited.text.toString()
 
-            //var checkDate = false
-            //try {
-            //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //        LocalDate.parse(hillFortDateVisited.text.toString(), DateTimeFormatter.ISO_DATE)
-            //       checkDate = true
-            //    }
-            //}catch (e: Exception) {
-            //    info { e }
-            //}
-            //if (checkDate || !hillfort.visited){
-            //   hillfort.dateVisited = hillFortDateVisited.text.toString()
-            //} else
-            //    toast("Please enter a valid date")
+            /**var checkDate = false
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    LocalDate.parse(hillFortDateVisited.text.toString(), DateTimeFormatter.ISO_DATE)
+                   checkDate = true
+                }
+            }catch (e: Exception) {
+                info { e }
+            }
+            if (checkDate || !hillfort.visited){
+               hillfort.dateVisited = hillFortDateVisited.text.toString()
+            } else
+                toast("Please enter a valid date")*/
 
             if (hillfort.title.isEmpty()) {
                 toast(R.string.enter_hillfort_title)
@@ -128,8 +130,10 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfort.image.removeAt(imageIndex)
             imageIndex = 0
             if (hillfort.image.size == 0){
-                hillfortImage.visibility = View.GONE
+                //hillfortImage.visibility = View.GONE
                 btnDeleteImage.visibility = View.GONE
+                chooseImage.setText("Add Image")
+                hillfortImage.setImageDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.ic_launcher_round))
             }else
                 hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image[imageIndex]))
         }
@@ -188,8 +192,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         when (requestCode) {
             IMAGE_REQUEST -> {
                 if (data != null) {
-                    hillfort.image.add(data.getData().toString())
-                    hillfortImage.setImageBitmap(readImage(this, resultCode, data))
+                    hillfort.image.add(data.data.toString())
+                    hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image[imageIndex]))
+                    //hillfortImage.setImageBitmap(readImage(this, resultCode, data))
                     chooseImage.setText(R.string.change_hillfort_image)
                     btnDeleteImage.visibility = View.VISIBLE
                 }

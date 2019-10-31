@@ -34,10 +34,6 @@ class HillfortList : AppCompatActivity(), HillfortListener {
         recyclerView.layoutManager = layoutManager
         //recyclerView.adapter = HillfortAdapter(app.hillforts.findAll(), this)
         loadHillforts()
-
-        toolbar.setOnClickListener{
-
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
