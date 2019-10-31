@@ -41,10 +41,6 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         app = application as MainApp
         toolbarAdd.title = title
         setSupportActionBar(toolbarAdd)
-
-        //val moveLocationMenuItem = findViewById<View>(R.id.hillfort_delete)
-        val moveLocationMenuItem = findViewById<ViewGroup>(R.id.menuGroup)
-
         info("Hillfort Activity started..")
 
         if (intent.hasExtra("hillfort_edit")) {
@@ -75,8 +71,6 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             var strLocation = "Latitude: " + hillfort.location.lat.toString() + "\nLongitude: " +hillfort.location.lng.toString() + "\nZoom: " +hillfort.location.zoom.toString()
             hillFortLocationDisplay.text = strLocation
         }
-
-
 
         toolbarAdd.setOnClickListener{
             app.users.deleteHillfort(app.currentUser, hillfort)

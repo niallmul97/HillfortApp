@@ -34,7 +34,7 @@ class UserJSONStore : UserStore, AnkoLogger {
         }
     }
 
-    override fun login(password: String, email: String): Boolean{
+    override fun login(email: String, password: String): Boolean{
         val user = findByEmail(email)
 
         if (user != null){

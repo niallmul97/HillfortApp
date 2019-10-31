@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hillfort.R
 import com.example.hillfort.main.MainApp
 import com.example.hillfort.models.HillfortModel
+import com.example.hillfort.models.UserModel
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivityForResult
+import org.jetbrains.anko.toast
 
 class HillfortList : AppCompatActivity(), HillfortListener {
 
@@ -31,6 +33,10 @@ class HillfortList : AppCompatActivity(), HillfortListener {
         recyclerView.layoutManager = layoutManager
         //recyclerView.adapter = HillfortAdapter(app.hillforts.findAll(), this)
         loadHillforts()
+
+        toolbar.setOnClickListener{
+
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -41,6 +47,12 @@ class HillfortList : AppCompatActivity(), HillfortListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_add -> startActivityForResult<HillfortActivity>(0)
+            R.id.logout ->{
+                app.currentUser = UserModel()
+                toast("Logout Successful")
+                startActivityForResult<LoginActivity>(0)
+                finish()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
