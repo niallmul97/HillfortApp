@@ -71,6 +71,7 @@ class UserJSONStore : UserStore, AnkoLogger {
             foundUser.password = user.password
             foundUser.id = user.id
             logAll()
+            serialize()
         }
     }
 

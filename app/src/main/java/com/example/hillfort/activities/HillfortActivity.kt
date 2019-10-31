@@ -21,14 +21,18 @@ import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import com.example.hillfort.models.HillfortModel
 import com.example.hillfort.models.Location
+import com.google.android.gms.common.internal.safeparcel.SafeParcelReader
 import kotlinx.android.synthetic.main.activity_hillfort.hillFortLocationDisplay
 import kotlinx.android.synthetic.main.activity_hillfort.hillFortVisited
 import kotlinx.android.synthetic.main.activity_hillfort.hillfortDescription
 import kotlinx.android.synthetic.main.activity_hillfort.hillfortTitle
 import kotlinx.android.synthetic.main.card_hillfort.*
 import org.jetbrains.anko.intentFor
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
@@ -38,10 +42,13 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     var imageIndex = 0
     val LOCATION_REQUEST = 2
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hillfort)
         var edit = false
+        var checkDate = false
+        val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH )
         app = application as MainApp
         toolbarAdd.title = title
         setSupportActionBar(toolbarAdd)
@@ -62,6 +69,20 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                 hillFortVisited.isChecked = true
                 hillFortDateVisited.setText(hillfort.dateVisited)
                 hillFortDateVisited.visibility = View.VISIBLE
+                if (hillfort.dateVisited != ""){
+                    var date = hillFortDateVisited.text.toString()
+                    try {
+                        formatter.parse(date)
+                        checkDate = true
+
+                    } catch (e: ParseException) {
+                        e.printStackTrace()
+                    }
+                    if (checkDate){
+                        hillfort.dateVisited = date
+                    } else
+                        toast("Please enter a valid date")
+                }
             } else
                 hillFortDateVisited.visibility = View.GONE
 
@@ -85,21 +106,19 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         btnAdd.setOnClickListener() {
             hillfort.title = hillfortTitle.text.toString()
             hillfort.description = hillfortDescription.text.toString()
-            hillfort.dateVisited = hillFortDateVisited.text.toString()
 
-            /**var checkDate = false
+            var date = hillFortDateVisited.text.toString()
             try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    LocalDate.parse(hillFortDateVisited.text.toString(), DateTimeFormatter.ISO_DATE)
-                   checkDate = true
-                }
-            }catch (e: Exception) {
-                info { e }
+                formatter.parse(date)
+                checkDate = true
+
+            } catch (e: ParseException) {
+                e.printStackTrace()
             }
-            if (checkDate || !hillfort.visited){
-               hillfort.dateVisited = hillFortDateVisited.text.toString()
+            if (checkDate){
+               hillfort.dateVisited = date
             } else
-                toast("Please enter a valid date")*/
+                toast("Please enter a valid date")
 
             if (hillfort.title.isEmpty()) {
                 toast(R.string.enter_hillfort_title)

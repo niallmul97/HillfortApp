@@ -67,7 +67,7 @@
         app:layout_constraintTop_toBottomOf="@+id/displayPassword" />
 
     <TextView
-        android:id="@+id/displayTotalHillfortsVisited"
+        android:id="@+id/displayTotalImages"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
@@ -82,7 +82,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/displayTotalImages"
+        android:id="@+id/displayTotalHillfortsVisited"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
@@ -93,7 +93,68 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.117"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/displayTotalHillfortsVisited"
+        app:layout_constraintTop_toBottomOf="@+id/displayTotalImages"
         app:layout_constraintVertical_bias="0.004" />
+
+    <TextView
+        android:id="@+id/displayMostRecentlyVisited"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:hint="MostRecent"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.117"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/displayTotalHillfortsVisited"
+        app:layout_constraintVertical_bias="0.005" />
+
+    <TextView
+        android:id="@+id/displayOldestVisited"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:hint="Oldest"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.117"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/displayMostRecentlyVisited"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/updateEmail"
+        android:layout_width="78dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="36dp"
+        android:background = "@drawable/rounded_button"
+        android:text="@string/updateEmail"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintStart_toEndOf="@+id/displayEmail"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/updatePassword"
+        android:layout_width="78dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="548dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/updatePassword"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toEndOf="@+id/displayPassword"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintVertical_bias="0.965" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
