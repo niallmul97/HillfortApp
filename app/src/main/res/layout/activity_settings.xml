@@ -26,32 +26,32 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
+    <EditText
         android:id="@+id/displayEmail"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="36dp"
-        android:hint="Email"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
-    <TextView
+    <EditText
         android:id="@+id/displayPassword"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:hint="Password"
+        android:inputType="textPassword"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintHorizontal_bias="0.117"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/displayEmail"
-        app:layout_constraintVertical_bias="0.014" />
+        app:layout_constraintVertical_bias="0.062" />
 
     <TextView
         android:id="@+id/displayTotalHillforts"
@@ -109,7 +109,7 @@
         app:layout_constraintHorizontal_bias="0.117"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/displayTotalHillfortsVisited"
-        app:layout_constraintVertical_bias="0.005" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/displayOldestVisited"
@@ -131,7 +131,7 @@
         android:layout_width="78dp"
         android:layout_height="39dp"
         android:layout_marginTop="36dp"
-        android:background = "@drawable/rounded_button"
+        android:background="@drawable/rounded_button"
         android:text="@string/updateEmail"
         android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -145,8 +145,9 @@
         android:id="@+id/updatePassword"
         android:layout_width="78dp"
         android:layout_height="39dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="548dp"
+        android:layout_marginBottom="516dp"
         android:background="@drawable/rounded_button"
         android:text="@string/updatePassword"
         android:textColor="@color/colorPrimary"
@@ -154,7 +155,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toEndOf="@+id/displayPassword"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="0.965" />
+        app:layout_constraintTop_toBottomOf="@+id/updateEmail"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
