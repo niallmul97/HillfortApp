@@ -13,6 +13,7 @@ class SplashActivity : AppCompatActivity() {
     internal val mRunnable: Runnable = Runnable {
         if (!isFinishing) {
 
+            //Points to the login activity
             val intent = Intent(applicationContext, LoginActivity::class.java)
             startActivity(intent)
             finish()

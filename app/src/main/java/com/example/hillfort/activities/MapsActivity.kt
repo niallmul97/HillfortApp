@@ -48,6 +48,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         map.setOnMarkerClickListener(this)
     }
 
+
+    //android up button that saves the location
     override fun onSupportNavigateUp(): Boolean {
         val resultIntent = Intent()
         resultIntent.putExtra("location", location)

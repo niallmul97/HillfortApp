@@ -27,12 +27,13 @@ class HillfortList : AppCompatActivity(), HillfortListener {
         setContentView(R.layout.activity_hillfort_list)
         app = application as MainApp
 
+        //creates toolbar
         toolbar.title = title
         setSupportActionBar(toolbar)
 
+        //recycle viewer is used to display all hillforts
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        //recyclerView.adapter = HillfortAdapter(app.hillforts.findAll(), this)
         loadHillforts()
     }
 
@@ -43,13 +44,19 @@ class HillfortList : AppCompatActivity(), HillfortListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+
+            //when the add hillfort button is pressed, the hillfort activity is started
             R.id.item_add -> startActivityForResult<HillfortActivity>(0)
+
+            //when the logout option is pressed, the current user is no longer the current user and the login activity is started
             R.id.logout ->{
                 app.currentUser = UserModel()
                 toast("Logout Successful")
                 startActivityForResult<LoginActivity>(0)
                 finish()
             }
+
+            //when the settings option is pressed, the settings activity is started
             R.id.settings ->{
                 startActivity<SettingsActivity>()
             }
@@ -57,10 +64,12 @@ class HillfortList : AppCompatActivity(), HillfortListener {
         return super.onOptionsItemSelected(item)
     }
 
+    //when a hillfort is clicked, hillfort activity for that hillfort is started, the user can now edit the hillfort
     override fun onHillfortClick(hillfort: HillfortModel) {
         startActivityForResult(intentFor<HillfortActivity>().putExtra("hillfort_edit", hillfort), 0)
     }
 
+    //calls the find all hillforts function to display them in the recycle viewer
     private fun loadHillforts() {
         showHillforts(app.users.findAllHillforts(app.currentUser))
     }
