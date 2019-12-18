@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.GoogleMap
 import com.example.hillfort.R
+import com.example.hillfort.helpers.readImageFromPath
 import com.example.hillfort.main.MainApp
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
@@ -32,6 +33,11 @@ class HillfortMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListene
 
     override fun onMarkerClick(marker: Marker): Boolean {
         textViewTitle.text = marker.title
+        val hillfort = app.users.findHillfortById(app.currentUser, marker.tag.toString().toLong())
+        if (hillfort != null){
+            textViewDescription.text = hillfort.description
+            imageView.setImageBitmap(readImageFromPath(this, hillfort.image[0]))
+        }
         return false
     }
 
