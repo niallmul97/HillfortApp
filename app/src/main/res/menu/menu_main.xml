@@ -9,6 +9,12 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/item_map"
+        android:icon="@android:drawable/ic_menu_mapmode"
+        android:title="@string/menu_map"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/menu_dropdown"
         android:title="@string/menu_dropdown"
         android:icon="@drawable/ic_menu_icon"

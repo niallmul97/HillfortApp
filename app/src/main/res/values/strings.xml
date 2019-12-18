@@ -24,4 +24,6 @@
     <string name="updateEmail">Update Email</string>
     <string name="updatePassword">Update Password</string>
     <string name="notes">Notes…</string>
+    <string name="menu_map">menu_map</string>
+    <string name="title_activity_hillfort_maps">Map of All Hillforts </string>
 </resources>
