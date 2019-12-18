@@ -7,11 +7,12 @@ import com.example.hillfort.R
 import com.example.hillfort.main.MainApp
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_hillfort_maps.*
 import kotlinx.android.synthetic.main.content_hillfort_maps.*
 
-class HillfortMapsActivity : AppCompatActivity() {
+class HillfortMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener  {
 
     lateinit var map: GoogleMap
     lateinit var app: MainApp
@@ -27,6 +28,11 @@ class HillfortMapsActivity : AppCompatActivity() {
             map = it
             configureMap()
         }
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        textViewTitle.text = marker.title
+        return false
     }
 
     override fun onDestroy() {
@@ -61,6 +67,7 @@ class HillfortMapsActivity : AppCompatActivity() {
             val options = MarkerOptions().title(it.title).position(loc)
             map.addMarker(options).tag = it.id
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.location.zoom))
+            map.setOnMarkerClickListener(this)
         }
     }
 }
