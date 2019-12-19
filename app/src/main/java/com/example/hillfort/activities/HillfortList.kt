@@ -17,6 +17,7 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import org.jetbrains.anko.toast
+import views.hillfort.HillfortView
 
 class HillfortList : AppCompatActivity(), HillfortListener {
 
@@ -46,7 +47,7 @@ class HillfortList : AppCompatActivity(), HillfortListener {
         when (item.itemId) {
 
             //when the add hillfort button is pressed, the hillfort activity is started
-            R.id.item_add -> startActivityForResult<HillfortActivity>(0)
+            R.id.item_add -> startActivityForResult<HillfortView>(0)
 
             //when the map button is pressed, the hillfort map activity is started
             R.id.item_map -> startActivity<HillfortMapsActivity>()
@@ -69,7 +70,7 @@ class HillfortList : AppCompatActivity(), HillfortListener {
 
     //when a hillfort is clicked, hillfort activity for that hillfort is started, the user can now edit the hillfort
     override fun onHillfortClick(hillfort: HillfortModel) {
-        startActivityForResult(intentFor<HillfortActivity>().putExtra("hillfort_edit", hillfort), 0)
+        startActivityForResult(intentFor<HillfortView>().putExtra("hillfort_edit", hillfort), 0)
     }
 
     //calls the find all hillforts function to display them in the recycle viewer

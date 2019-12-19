@@ -41,7 +41,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.HillfortActivity" />
+        <activity android:name="views.hillfort.HillfortView" />
     </application>
 
 </manifest>

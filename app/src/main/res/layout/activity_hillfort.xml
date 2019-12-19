@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_dark_background"
-    tools:context="com.example.hillfort.activities.HillfortActivity">
+    tools:context="views.hillfort.HillfortView">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -115,7 +115,7 @@
                 android:id="@+id/chooseImage"
                 android:layout_width="148dp"
                 android:layout_height="41dp"
-                android:layout_marginTop="96dp"
+                android:layout_marginTop="28dp"
                 android:background="@drawable/rounded_button"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
@@ -142,25 +142,28 @@
                 android:layout_width="148dp"
                 android:layout_height="41dp"
                 android:layout_marginStart="48dp"
-                android:layout_marginTop="96dp"
+                android:layout_marginTop="28dp"
                 android:background="@drawable/rounded_button"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:text="@string/button_deleteImage"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
-                android:visibility="visible"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/hillFortVisited"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/chooseImage"
-                app:layout_constraintTop_toBottomOf="@+id/hillfortImage" />
+                app:layout_constraintTop_toBottomOf="@+id/hillfortImage"
+                app:layout_constraintVertical_bias="0.0" />
 
             <CheckBox
                 android:id="@+id/hillFortVisited"
                 android:layout_width="157dp"
                 android:layout_height="38dp"
                 android:layout_marginStart="28dp"
-                android:layout_marginBottom="52dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="28dp"
                 android:buttonTint="@color/colorPrimary"
                 android:maxLength="25"
                 android:maxLines="1"
@@ -172,14 +175,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/chooseImage"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toBottomOf="@id/chooseImage" />
 
             <EditText
                 android:id="@+id/hillFortDateVisited"
                 android:layout_width="179dp"
                 android:layout_height="37dp"
-                android:layout_marginBottom="52dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="29dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/visitDate"
@@ -190,19 +193,18 @@
                 android:textColor="@color/colorPrimary"
                 android:textColorHint="@color/colorPrimary"
                 android:textSize="14sp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/notes"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.425"
                 app:layout_constraintStart_toEndOf="@+id/hillFortVisited"
-                app:layout_constraintTop_toBottomOf="@id/chooseImage"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toBottomOf="@id/chooseImage" />
 
             <EditText
                 android:id="@+id/notes"
                 android:layout_width="395dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="32dp"
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="@string/notes"
@@ -212,14 +214,13 @@
                 android:textColorHint="@color/colorPrimary"
                 app:layout_constraintBottom_toTopOf="@+id/btnAdd"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/btnAdd"
                 android:layout_width="379dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="72dp"
                 android:background="@drawable/rounded_button"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"

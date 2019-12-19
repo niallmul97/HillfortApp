@@ -10,7 +10,6 @@
     <string name="button_addImage"> Add Image </string>
     <string name="button_deleteImage"> Delete Image </string>
     <string name="select_hillfort_image">Select hillfort image</string>
-    <string name="change_hillfort_image">Add another image</string>
     <string name="button_location">Set Location</string>
     <string name="title_activity_maps">Map</string>
     <string name="blank_location">No location set</string>

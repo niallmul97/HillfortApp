@@ -43,7 +43,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="285dp"
             android:layout_marginEnd="0dp"
-            android:contentDescription="@string/change_hillfort_image" />
+            android:contentDescription="@string/button_addImage" />
 
         <CheckBox
             android:clickable="false"
