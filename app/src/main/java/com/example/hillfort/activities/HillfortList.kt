@@ -48,6 +48,9 @@ class HillfortList : AppCompatActivity(), HillfortListener {
             //when the add hillfort button is pressed, the hillfort activity is started
             R.id.item_add -> startActivityForResult<HillfortActivity>(0)
 
+            //when the map button is pressed, the hillfort map activity is started
+            R.id.item_map -> startActivity<HillfortMapsActivity>()
+
             //when the logout option is pressed, the current user is no longer the current user and the login activity is started
             R.id.logout ->{
                 app.currentUser = UserModel()

@@ -121,6 +121,10 @@ class UserJSONStore : UserStore, AnkoLogger {
         }
     }
 
+    override fun findHillfortById(user: UserModel, id: Long): HillfortModel {
+        return user.hillforts.find { hillfortModel: HillfortModel -> hillfortModel.id  == id }!!
+    }
+
     fun logAllHillforts(user: UserModel) {
         user.hillforts.forEach{ info("${it}") }
     }

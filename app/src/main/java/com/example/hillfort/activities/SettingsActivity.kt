@@ -110,7 +110,6 @@ class SettingsActivity : AppCompatActivity(), AnkoLogger {
             displayOldestVisited.setText("Oldest Hillfort Visit: N/A")
         }
 
-
         //when the update email button is pressed
         updateEmail.setOnClickListener {
 
