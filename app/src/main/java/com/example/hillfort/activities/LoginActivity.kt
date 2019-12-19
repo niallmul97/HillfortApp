@@ -1,19 +1,17 @@
 package com.example.hillfort.activities
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hillfort.R
 import com.example.hillfort.main.MainApp
 import com.example.hillfort.models.UserModel
-import kotlinx.android.synthetic.main.activity_hillfort_list.*
 
 import kotlinx.android.synthetic.main.activity_login.*
 import models.generateRandomId
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.email
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
+import views.hillfortList.HillfortList
 
 class LoginActivity : AppCompatActivity(), AnkoLogger {
 
