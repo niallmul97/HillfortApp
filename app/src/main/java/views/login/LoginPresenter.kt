@@ -1,16 +1,14 @@
 package views.login
 
-import androidx.core.content.ContextCompat.startActivity
 import com.example.hillfort.main.MainApp
 import com.example.hillfort.models.UserModel
 import kotlinx.android.synthetic.main.activity_login.*
 import models.generateRandomId
-import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import views.hillfortList.HillfortListView
 
-class LoginPresenter(val view: LoginActivity) {
+class LoginPresenter(val view: LoginView) {
     var app: MainApp
 
     init {

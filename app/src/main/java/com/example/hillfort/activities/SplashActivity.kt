@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hillfort.R
-import views.login.LoginActivity
+import views.login.LoginView
 
 class SplashActivity : AppCompatActivity() {
     private var mDelayHandler: Handler? = null
@@ -15,7 +15,7 @@ class SplashActivity : AppCompatActivity() {
         if (!isFinishing) {
 
             //Points to the login activity
-            val intent = Intent(applicationContext, LoginActivity::class.java)
+            val intent = Intent(applicationContext, LoginView::class.java)
             startActivity(intent)
             finish()
         }

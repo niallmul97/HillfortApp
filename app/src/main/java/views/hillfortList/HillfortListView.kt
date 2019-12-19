@@ -8,8 +8,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hillfort.R
-import views.login.LoginActivity
-import com.example.hillfort.activities.SettingsActivity
+import views.login.LoginView
+import views.settings.SettingsActivity
 import com.example.hillfort.main.MainApp
 import com.example.hillfort.models.HillfortModel
 import com.example.hillfort.models.UserModel
@@ -57,7 +57,7 @@ class HillfortListView : AppCompatActivity(), HillfortListener {
             R.id.logout ->{
                 app.currentUser = UserModel()
                 toast("Logout Successful")
-                startActivityForResult<LoginActivity>(0)
+                startActivityForResult<LoginView>(0)
                 finish()
             }
 

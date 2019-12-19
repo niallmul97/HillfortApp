@@ -16,9 +16,9 @@
             android:name=".activities.HillfortMapsActivity"
             android:label="@string/title_activity_hillfort_maps"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".activities.SettingsActivity" />
+        <activity android:name="views.settings.SettingsActivity" />
         <activity
-            android:name="views.login.LoginActivity"
+            android:name="views.login.LoginView"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
 

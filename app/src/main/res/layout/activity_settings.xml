@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_dark_background"
-    tools:context=".activities.SettingsActivity">
+    tools:context="views.settings.SettingsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -35,7 +35,7 @@
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintHorizontal_bias="0.117"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
@@ -134,12 +134,10 @@
         android:background="@drawable/rounded_button"
         android:text="@string/updateEmail"
         android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toEndOf="@+id/displayEmail"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
     <Button
         android:id="@+id/updatePassword"
@@ -147,15 +145,12 @@
         android:layout_height="39dp"
         android:layout_marginTop="45dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="516dp"
         android:background="@drawable/rounded_button"
         android:text="@string/updatePassword"
         android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="0.916"
         app:layout_constraintStart_toEndOf="@+id/displayPassword"
-        app:layout_constraintTop_toBottomOf="@+id/updateEmail"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/updateEmail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

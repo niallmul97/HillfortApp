@@ -13,7 +13,7 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import views.hillfortList.HillfortListView
 
-class LoginActivity : AppCompatActivity(), AnkoLogger {
+class LoginView : AppCompatActivity(), AnkoLogger {
 
     lateinit var app : MainApp
     lateinit var presenter: LoginPresenter
