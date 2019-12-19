@@ -6,7 +6,7 @@ import org.jetbrains.anko.toast
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SettingsPresenter(val view: SettingsActivity) {
+class SettingsPresenter(val view: SettingsView) {
     var app: MainApp
     val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH )
 

@@ -5,7 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.hillfort.R
-import com.example.hillfort.activities.MapsActivity
+import views.maps.MapsActivity
 import com.example.hillfort.helpers.readImageFromPath
 import com.example.hillfort.helpers.showImagePicker
 import com.example.hillfort.main.MainApp
@@ -14,7 +14,6 @@ import com.example.hillfort.models.Location
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.startActivityForResult
 import org.jetbrains.anko.toast
 import java.text.ParseException
 import java.text.SimpleDateFormat

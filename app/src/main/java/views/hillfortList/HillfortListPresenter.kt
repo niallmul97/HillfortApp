@@ -1,7 +1,7 @@
 package views.hillfortList
 
 import adapters.HillfortAdapter
-import com.example.hillfort.activities.HillfortMapsActivity
+import views.editLocation.HillfortMapsActivity
 import com.example.hillfort.main.MainApp
 import com.example.hillfort.models.HillfortModel
 import kotlinx.android.synthetic.main.activity_hillfort_list.*

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_dark_background"
-    tools:context="views.settings.SettingsActivity">
+    tools:context="views.settings.SettingsView">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"

@@ -1,4 +1,4 @@
-package com.example.hillfort.activities
+package views.editLocation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -17,11 +17,13 @@ class HillfortMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListene
 
     lateinit var map: GoogleMap
     lateinit var app: MainApp
+    lateinit var presenter: EditLocationPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hillfort_maps)
         app = application as MainApp
+        presenter = EditLocationPresenter(this)
         toolbar.title = title
         setSupportActionBar(toolbar)
         mapView2.onCreate(savedInstanceState);

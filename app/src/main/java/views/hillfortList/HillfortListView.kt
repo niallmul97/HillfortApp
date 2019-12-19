@@ -9,7 +9,7 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hillfort.R
 import views.login.LoginView
-import views.settings.SettingsActivity
+import views.settings.SettingsView
 import com.example.hillfort.main.MainApp
 import com.example.hillfort.models.HillfortModel
 import com.example.hillfort.models.UserModel
@@ -63,7 +63,7 @@ class HillfortListView : AppCompatActivity(), HillfortListener {
 
             //when the settings option is pressed, the settings activity is started
             R.id.settings ->{
-                startActivity<SettingsActivity>()
+                startActivity<SettingsView>()
             }
         }
         return super.onOptionsItemSelected(item)
