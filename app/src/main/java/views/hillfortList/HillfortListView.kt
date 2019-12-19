@@ -1,6 +1,5 @@
 package views.hillfortList
 
-import adapters.HillfortAdapter
 import adapters.HillfortListener
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,20 +8,17 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hillfort.R
-import com.example.hillfort.activities.HillfortMapsActivity
-import com.example.hillfort.activities.LoginActivity
+import views.login.LoginActivity
 import com.example.hillfort.activities.SettingsActivity
 import com.example.hillfort.main.MainApp
 import com.example.hillfort.models.HillfortModel
 import com.example.hillfort.models.UserModel
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
-import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import org.jetbrains.anko.toast
-import views.hillfort.HillfortView
 
-class HillfortList : AppCompatActivity(), HillfortListener {
+class HillfortListView : AppCompatActivity(), HillfortListener {
 
     lateinit var presenter: HillfortListPresenter
     lateinit var app: MainApp

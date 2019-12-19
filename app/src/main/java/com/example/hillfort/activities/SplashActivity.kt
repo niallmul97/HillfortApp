@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hillfort.R
+import views.login.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
     private var mDelayHandler: Handler? = null

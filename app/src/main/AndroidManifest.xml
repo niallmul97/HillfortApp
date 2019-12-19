@@ -18,7 +18,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".activities.SettingsActivity" />
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="views.login.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -29,7 +29,7 @@
         <activity
             android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name="views.hillfortList.HillfortList" />
+        <activity android:name="views.hillfortList.HillfortListView" />
         <activity
             android:name=".activities.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

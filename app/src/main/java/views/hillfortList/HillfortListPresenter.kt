@@ -10,7 +10,7 @@ import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import views.hillfort.HillfortView
 
-class HillfortListPresenter(val view: HillfortList) {
+class HillfortListPresenter(val view: HillfortListView) {
     var app: MainApp
 
     init {
