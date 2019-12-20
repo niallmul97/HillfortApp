@@ -49,44 +49,8 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
         toolbarAdd.title = title
         setSupportActionBar(toolbarAdd)
 
-        var checkDate = false
-        val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH )
-
         info("Hillfort Activity started..")
         presenter = HillfortPresenter(this)
-
-        //Adds the hillfort
-        btnAdd.setOnClickListener {
-            if (hillfortTitle.text.isEmpty()) {
-                toast(R.string.enter_hillfort_title)
-            }
-            //checks if hillfort has been visited
-            else if (hillFortVisited.isChecked){
-                val date = hillFortDateVisited.text.toString()
-
-                //validates the "date" as an actual date
-                try {
-                    formatter.parse(date)
-                    checkDate = true
-
-                } catch (e: ParseException) {
-                    e.printStackTrace()
-                }
-
-                //if validation is successful the "date" is set as the date visited
-                if (checkDate){
-                    hillfort.dateVisited = date
-                    presenter.doAddOrSave(hillfortTitle.text.toString(), hillfortDescription.text.toString(), notes.text.toString(), hillFortDateVisited.text.toString())
-                } else
-                //otherwise add a valid date
-                    toast("Please enter a valid date")
-            } else{
-                //if hillfort isn't visited, date defaults to "" and text field is gone
-                hillFortDateVisited.visibility = GONE
-                hillfort.dateVisited = ""
-                presenter.doAddOrSave(hillfortTitle.text.toString(), hillfortDescription.text.toString(), notes.text.toString(), hillFortDateVisited.text.toString())
-            }
-        }
 
         //when a user clicks the image
         hillfortImage.setOnClickListener {presenter.doIterateImage()}
@@ -124,7 +88,6 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
         }else {
             hillfortImage.visibility = GONE
         }
-        btnAdd.setText("Save Hillfort")
     }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
@@ -152,6 +115,42 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
             //when the delete button is pressed, the hillfort is deleted and the user is brought back and activity
             R.id.hillfort_delete -> {
                 presenter.doDelete()
+            }
+
+            R.id.item_save ->{
+
+                var checkDate = false
+                val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH )
+
+                if (hillfortTitle.text.isEmpty()) {
+                    toast(R.string.enter_hillfort_title)
+                }
+                //checks if hillfort has been visited
+                else if (hillFortVisited.isChecked){
+                    val date = hillFortDateVisited.text.toString()
+
+                    //validates the "date" as an actual date
+                    try {
+                        formatter.parse(date)
+                        checkDate = true
+
+                    } catch (e: ParseException) {
+                        e.printStackTrace()
+                    }
+
+                    //if validation is successful the "date" is set as the date visited
+                    if (checkDate){
+                        hillfort.dateVisited = date
+                        presenter.doAddOrSave(hillfortTitle.text.toString(), hillfortDescription.text.toString(), notes.text.toString(), hillFortDateVisited.text.toString())
+                    } else
+                    //otherwise add a valid date
+                        toast("Please enter a valid date")
+                } else{
+                    //if hillfort isn't visited, date defaults to "" and text field is gone
+                    hillFortDateVisited.visibility = GONE
+                    hillfort.dateVisited = ""
+                    presenter.doAddOrSave(hillfortTitle.text.toString(), hillfortDescription.text.toString(), notes.text.toString(), hillFortDateVisited.text.toString())
+                }
             }
         }
         return super.onOptionsItemSelected(item)

@@ -36,7 +36,6 @@ class HillfortPresenter(val view: HillfortView){
             hillfort = view.intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
             view.hillfortTitle.setText(hillfort.title)
             view.hillfortDescription.setText(hillfort.description)
-            view.btnAdd.setText(R.string.save_hillfort)
             view.btnDeleteImage.visibility = View.VISIBLE
             view.notes.setText(hillfort.notes)
 

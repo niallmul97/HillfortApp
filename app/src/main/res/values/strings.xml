@@ -25,4 +25,5 @@
     <string name="notes">Notes…</string>
     <string name="menu_map">menu_map</string>
     <string name="title_activity_hillfort_maps">Map of All Hillforts </string>
+    <string name="menu_saveHillfort">Save</string>
 </resources>
