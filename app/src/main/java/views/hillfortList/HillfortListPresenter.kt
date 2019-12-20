@@ -1,7 +1,7 @@
 package views.hillfortList
 
 import adapters.HillfortAdapter
-import views.editLocation.HillfortMapsActivity
+import views.editLocation.EditLocationView
 import com.example.hillfort.main.MainApp
 import com.example.hillfort.models.HillfortModel
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
@@ -35,6 +35,6 @@ class HillfortListPresenter(val view: HillfortListView) {
     }
 
     fun doShowHillfortsMap(){
-        view.startActivity<HillfortMapsActivity>()
+        view.startActivity<EditLocationView>()
     }
 }

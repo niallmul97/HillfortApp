@@ -5,7 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.hillfort.R
-import views.maps.MapsActivity
+import views.maps.MapsView
 import com.example.hillfort.helpers.readImageFromPath
 import com.example.hillfort.helpers.showImagePicker
 import com.example.hillfort.main.MainApp
@@ -191,7 +191,7 @@ class HillfortPresenter(val view: HillfortView){
             location.zoom = hillfort.location.zoom
         }
         //starts up the map activity
-        view.startActivityForResult(view.intentFor<MapsActivity>().putExtra("location", location), LOCATION_REQUEST)
+        view.startActivityForResult(view.intentFor<MapsView>().putExtra("location", location), LOCATION_REQUEST)
     }
 
     fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {

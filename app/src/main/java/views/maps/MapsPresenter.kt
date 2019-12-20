@@ -9,7 +9,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
-class MapPresenter(val view: MapsActivity) {
+class MapPresenter(val view: MapsView) {
 
     var location = Location()
 

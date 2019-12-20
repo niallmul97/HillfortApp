@@ -13,7 +13,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_hillfort_maps.*
 import kotlinx.android.synthetic.main.content_hillfort_maps.*
 
-class HillfortMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener  {
+class EditLocationView : AppCompatActivity(), GoogleMap.OnMarkerClickListener  {
 
     lateinit var map: GoogleMap
     lateinit var app: MainApp
@@ -26,21 +26,15 @@ class HillfortMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListene
         presenter = EditLocationPresenter(this)
         toolbar.title = title
         setSupportActionBar(toolbar)
-        mapView2.onCreate(savedInstanceState);
+        mapView2.onCreate(savedInstanceState)
         mapView2.getMapAsync {
             map = it
             configureMap()
         }
     }
 
-    override fun onMarkerClick(marker: Marker): Boolean {
-        textViewTitle.text = marker.title
-        val hillfort = app.users.findHillfortById(app.currentUser, marker.tag.toString().toLong())
-        if (hillfort != null){
-            textViewDescription.text = hillfort.description
-            imageView.setImageBitmap(readImageFromPath(this, hillfort.image[0]))
-        }
-        return false
+    override fun onMarkerClick(marker:Marker):Boolean {
+       return presenter.doMarkerClick(marker)
     }
 
     override fun onDestroy() {
@@ -69,13 +63,6 @@ class HillfortMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListene
     }
 
     fun configureMap() {
-        map.uiSettings.setZoomControlsEnabled(true)
-        app.users.findAllHillforts(app.currentUser).forEach {
-            val loc = LatLng(it.location.lat, it.location.lng)
-            val options = MarkerOptions().title(it.title).position(loc)
-            map.addMarker(options).tag = it.id
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.location.zoom))
-            map.setOnMarkerClickListener(this)
-        }
+        presenter.doConfigureMap()
     }
 }
