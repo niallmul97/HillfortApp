@@ -15,13 +15,14 @@ import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
+import views.Base.BasePresenter
+import views.Base.BaseView
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class HillfortPresenter(val view: HillfortView){
+class HillfortPresenter(view: BaseView) : BasePresenter(view){
     var hillfort = HillfortModel()
-    lateinit var app : MainApp
     val IMAGE_REQUEST = 1
     var imageIndex = 0
     val LOCATION_REQUEST = 2
@@ -114,23 +115,23 @@ class HillfortPresenter(val view: HillfortView){
         } else {
             app.users.createHillfort(app.currentUser, hillfort.copy())
         }
-        view.info("add Button Pressed: $ view.hillfortTitle")
-        view.info("$hillfort")
-        view.setResult(AppCompatActivity.RESULT_OK)
-        view.finish()
+        view?.info("add Button Pressed: $ view.hillfortTitle")
+        view?.info("$hillfort")
+        view?.setResult(AppCompatActivity.RESULT_OK)
+        view?.finish()
     }
 
     fun doCancel(){
-        view.finish()
+        view?.finish()
     }
 
     fun doDelete(){
         app.users.deleteHillfort(app.currentUser, hillfort)
-        view.finish()
+        view?.finish()
     }
 
     fun doSelectImage(){
-        showImagePicker(view, IMAGE_REQUEST)
+        view?.let { showImagePicker(it, IMAGE_REQUEST) }
     }
 
     fun doRemoveImage(){
@@ -144,13 +145,13 @@ class HillfortPresenter(val view: HillfortView){
         if (hillfort.image.size == 0){
 
             //the delete button is gone, the button once again displays add image, and the default logo is displayed
-            view.btnDeleteImage.visibility = View.GONE
-            view.chooseImage.setText("Add Image")
-            view.hillfortImage.setImageDrawable(ContextCompat.getDrawable(view.applicationContext, R.drawable.ic_launcher_round))
+            view?.btnDeleteImage?.visibility = View.GONE
+            view?.chooseImage?.setText("Add Image")
+            view?.hillfortImage?.setImageDrawable(ContextCompat.getDrawable(view!!.applicationContext, R.drawable.ic_launcher_round))
         }else
 
         //otherwise, the image at the image index is displayed
-            view.hillfortImage.setImageBitmap(readImageFromPath(view, hillfort.image[imageIndex]))
+            view?.hillfortImage?.setImageBitmap(readImageFromPath(view!!, hillfort.image[imageIndex]))
     }
 
     fun doIterateImage(){
@@ -164,21 +165,21 @@ class HillfortPresenter(val view: HillfortView){
             }
 
             //displays the image at whichever image index, tapping on the image when there are more than 1 will go to the next image
-            view.hillfortImage.setImageBitmap(readImageFromPath(view, hillfort.image[imageIndex]))
+            view?.hillfortImage?.setImageBitmap(readImageFromPath(view!!, hillfort.image[imageIndex]))
         }
     }
     fun doHillfortVisited(){
         //stores visited as true or false
-        hillfort.visited = view.hillFortVisited.isChecked.toString().toBoolean()
+        hillfort.visited = view?.hillFortVisited?.isChecked.toString().toBoolean()
 
         //if not checked
-        if (!view.hillFortVisited.isChecked){
+        if (view?.hillFortVisited?.isChecked != true){
             //date text field is gone
-            view.hillFortDateVisited.visibility = View.GONE
+            view?.hillFortDateVisited?.visibility = View.GONE
         }
         else
         //if checked its visible
-            view.hillFortDateVisited.visibility = View.VISIBLE
+            view?.hillFortDateVisited?.visibility = View.VISIBLE
     }
 
     fun doSetLocation(){
@@ -190,18 +191,18 @@ class HillfortPresenter(val view: HillfortView){
             location.zoom = hillfort.location.zoom
         }
         //starts up the map activity
-        view.startActivityForResult(view.intentFor<MapsView>().putExtra("location", location), LOCATION_REQUEST)
+        view?.startActivityForResult(view?.intentFor<MapsView>()?.putExtra("location", location), LOCATION_REQUEST)
     }
 
-    fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         when (requestCode) {
             IMAGE_REQUEST -> {
                 if (data != null) {
                     hillfort.image.add(data.data.toString())
-                    view.hillfortImage.setImageBitmap(readImageFromPath(view, hillfort.image[imageIndex]))
-                    view.btnDeleteImage.visibility = View.VISIBLE
+                    view?.hillfortImage?.setImageBitmap(readImageFromPath(view!!, hillfort.image[imageIndex]))
+                    view?.btnDeleteImage?.visibility = View.VISIBLE
                     if(edit)
-                        view.showHillfort(hillfort)
+                        view?.showHillfort(hillfort)
                 }
             }
             LOCATION_REQUEST -> {
@@ -211,10 +212,10 @@ class HillfortPresenter(val view: HillfortView){
                     hillfort.location.lng = location.lng
                     hillfort.location.zoom = location.zoom
                     var strLocation = "Latitude: " + hillfort.location.lat.toString() + "\nLongitude: " +hillfort.location.lng.toString() + "\nZoom: " +hillfort.location.zoom.toString()
-                    view.hillFortLocationDisplay.text = strLocation
-                    view.hillFortLocationDisplay.visibility = View.VISIBLE
+                    view?.hillFortLocationDisplay?.text = strLocation
+                    view?.hillFortLocationDisplay?.visibility = View.VISIBLE
                     if(edit)
-                        view.showHillfort(hillfort)
+                        view?.showHillfort(hillfort)
                 }
             }
         }

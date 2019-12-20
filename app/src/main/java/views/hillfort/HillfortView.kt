@@ -29,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_hillfort.hillfortDescription
 import kotlinx.android.synthetic.main.activity_hillfort.hillfortTitle
 import kotlinx.android.synthetic.main.card_hillfort.*
 import org.jetbrains.anko.intentFor
+import views.Base.BaseView
 import views.hillfort.HillfortPresenter
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -36,7 +37,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class HillfortView : AppCompatActivity(), AnkoLogger {
+class HillfortView :  BaseView(), AnkoLogger {
 
     var hillfort = HillfortModel()
     lateinit var presenter: HillfortPresenter
@@ -50,7 +51,7 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
         setSupportActionBar(toolbarAdd)
 
         info("Hillfort Activity started..")
-        presenter = HillfortPresenter(this)
+        presenter = initPresenter(HillfortPresenter(this)) as HillfortPresenter
 
         //when a user clicks the image
         hillfortImage.setOnClickListener {presenter.doIterateImage()}
@@ -68,7 +69,7 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
         hillFortVisited.setOnClickListener{presenter.doHillfortVisited()}
     }
 
-    fun showHillfort(hillfort: HillfortModel){
+    override fun showHillfort(hillfort: HillfortModel){
         hillfortTitle.setText(hillfort.title)
         hillfortDescription.setText(hillfort.description)
         hillFortDateVisited.setText(hillfort.dateVisited)
