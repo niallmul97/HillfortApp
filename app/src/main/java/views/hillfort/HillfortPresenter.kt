@@ -145,13 +145,13 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
         if (hillfort.image.size == 0){
 
             //the delete button is gone, the button once again displays add image, and the default logo is displayed
-            view?.btnDeleteImage?.visibility = View.GONE
-            view?.chooseImage?.setText("Add Image")
-            view?.hillfortImage?.setImageDrawable(ContextCompat.getDrawable(view!!.applicationContext, R.drawable.ic_launcher_round))
+            view!!.btnDeleteImage.visibility = View.GONE
+            view!!.chooseImage.setText("Add Image")
+            view!!.hillfortImage.setImageDrawable(ContextCompat.getDrawable(view!!.applicationContext, R.drawable.ic_launcher_round))
         }else
 
         //otherwise, the image at the image index is displayed
-            view?.hillfortImage?.setImageBitmap(readImageFromPath(view!!, hillfort.image[imageIndex]))
+            view!!.hillfortImage.setImageBitmap(readImageFromPath(view!!, hillfort.image[imageIndex]))
     }
 
     fun doIterateImage(){

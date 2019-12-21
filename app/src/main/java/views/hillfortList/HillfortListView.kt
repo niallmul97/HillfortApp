@@ -1,5 +1,6 @@
 package views.hillfortList
 
+import adapters.HillfortAdapter
 import adapters.HillfortListener
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -13,12 +14,14 @@ import views.settings.SettingsView
 import com.example.hillfort.main.MainApp
 import com.example.hillfort.models.HillfortModel
 import com.example.hillfort.models.UserModel
+import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import org.jetbrains.anko.toast
+import views.Base.BaseView
 
-class HillfortListView : AppCompatActivity(), HillfortListener {
+class HillfortListView : BaseView(), HillfortListener {
 
     lateinit var presenter: HillfortListPresenter
     lateinit var app: MainApp
@@ -26,17 +29,22 @@ class HillfortListView : AppCompatActivity(), HillfortListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hillfort_list)
-        presenter = HillfortListPresenter(this)
-        app = MainApp()
+        presenter = initPresenter(HillfortListPresenter(this)) as HillfortListPresenter
 
+        app = MainApp()
         //creates toolbar
         toolbar.title = title
-        setSupportActionBar(toolbar)
+        super.init(toolbar)
 
         //recycle viewer is used to display all hillforts
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         presenter.getHillforts()
+    }
+
+    override fun showHillforts(hillforts: List<HillfortModel>){
+        recyclerView.adapter = HillfortAdapter(hillforts, this)
+        recyclerView.adapter?.notifyDataSetChanged()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

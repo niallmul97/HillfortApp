@@ -1,40 +1,27 @@
 package views.hillfortList
 
 import adapters.HillfortAdapter
-import views.editLocation.EditLocationView
-import com.example.hillfort.main.MainApp
 import com.example.hillfort.models.HillfortModel
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.startActivityForResult
-import views.hillfort.HillfortView
+import views.Base.BasePresenter
+import views.Base.BaseView
+import views.Base.VIEW
 
-class HillfortListPresenter(val view: HillfortListView) {
-    var app: MainApp
-
-    init {
-        app = view.application as MainApp
-    }
+class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
 
     fun getHillforts(){
-        doShowHillforts(app.users.findAllHillforts(app.currentUser))
-    }
-
-    fun doShowHillforts(hillforts: List<HillfortModel>){
-        view.recyclerView.adapter = HillfortAdapter(hillforts, view)
-        view.recyclerView.adapter?.notifyDataSetChanged()
+        view?.showHillforts(app.users.findAllHillforts(app.currentUser))
     }
 
     fun doAddHillfort(){
-        view.startActivityForResult<HillfortView>(0)
+        view?.navigateTo(VIEW.HILLFORT)
     }
 
     fun doEditHillfort(hillfort: HillfortModel){
-        view.startActivityForResult(view.intentFor<HillfortView>().putExtra("hillfort_edit", hillfort), 0)
+        view?.navigateTo(VIEW.HILLFORT, 0, "hillfort_edit", hillfort)
     }
 
     fun doShowHillfortsMap(){
-        view.startActivity<EditLocationView>()
+        view?.navigateTo(VIEW.MAPS)
     }
 }

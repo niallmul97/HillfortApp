@@ -19,7 +19,7 @@ enum class VIEW {
     LOCATION, HILLFORT, MAPS, LIST
 }
 
-open abstract class BaseView() : AppCompatActivity(), AnkoLogger {
+abstract class BaseView() : AppCompatActivity(), AnkoLogger {
 
     var basePresenter: BasePresenter? = null
 
@@ -65,7 +65,7 @@ open abstract class BaseView() : AppCompatActivity(), AnkoLogger {
     }
 
     open fun showHillfort(hillfort: HillfortModel) {}
-    open fun showHillforts(hillfort: List<HillfortModel>) {}
+    open fun showHillforts(hillforts: List<HillfortModel>) {}
     open fun showProgress() {}
     open fun hideProgress() {}
 }

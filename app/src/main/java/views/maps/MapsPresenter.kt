@@ -2,47 +2,36 @@ package views.maps
 
 import android.app.Activity
 import android.content.Intent
+import com.example.hillfort.models.HillfortModel
 import com.example.hillfort.models.Location
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import views.Base.BasePresenter
+import views.Base.BaseView
 
-class MapPresenter(val view: MapsView) {
+class MapsPresenter(view: BaseView) : BasePresenter(view) {
 
-    var location = Location()
-
-    init {
-        location = view.intent.extras?.getParcelable<Location>("location")!!
+    fun doPopulateMap(map: GoogleMap, hillforts: List<HillfortModel>) {
+        map.uiSettings.setZoomControlsEnabled(true)
+        hillforts.forEach {
+            val loc = LatLng(it.location.lat, it.location.lng)
+            val options = MarkerOptions().title(it.title).position(loc)
+            map.addMarker(options).tag = it.id
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.location.zoom))
+        }
     }
 
-    fun initMap(map: GoogleMap) {
-        val loc = LatLng(location.lat, location.lng)
-        val options = MarkerOptions()
-            .title("Placemark")
-            .snippet("GPS : " + loc.toString())
-            .draggable(true)
-            .position(loc)
-        map.addMarker(options)
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
+    fun doMarkerSelected(marker: Marker) {
+        val tag = marker.tag as Long
+        val hillforts = app.users.findHillfortById(app.currentUser, tag)
+        if (hillforts != null) view?.showHillfort(hillforts)
+
     }
 
-    fun doUpdateLocation(lat: Double, lng: Double, zoom: Float) {
-        location.lat = lat
-        location.lng = lng
-        location.zoom = zoom
-    }
-
-    fun doOnBackPressed() {
-        val resultIntent = Intent()
-        resultIntent.putExtra("location", location)
-        view.setResult(Activity.RESULT_OK, resultIntent)
-        view.finish()
-    }
-
-    fun doUpdateMarker(marker: Marker) {
-        val loc = LatLng(location.lat, location.lng)
-        marker.setSnippet("GPS : " + loc.toString())
+    fun loadPlacemarks() {
+        view?.showHillforts(app.users.findAllHillforts(app.currentUser))
     }
 }

@@ -47,8 +47,7 @@ class HillfortView :  BaseView(), AnkoLogger {
         setContentView(R.layout.activity_hillfort)
 
         //Sets up toolbar
-        toolbarAdd.title = title
-        setSupportActionBar(toolbarAdd)
+        super.init(toolbarAdd)
 
         info("Hillfort Activity started..")
         presenter = initPresenter(HillfortPresenter(this)) as HillfortPresenter
