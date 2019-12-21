@@ -1,68 +1,46 @@
 package views.editLocation
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.GoogleMap
 import com.example.hillfort.R
-import com.example.hillfort.helpers.readImageFromPath
-import com.example.hillfort.main.MainApp
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.LatLng
+import com.example.hillfort.models.HillfortModel
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_hillfort_maps.*
-import kotlinx.android.synthetic.main.content_hillfort_maps.*
+import views.Base.BaseView
 
-class EditLocationView : AppCompatActivity(), GoogleMap.OnMarkerClickListener  {
+class EditLocationView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener {
 
     lateinit var map: GoogleMap
-    lateinit var app: MainApp
     lateinit var presenter: EditLocationPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_hillfort_maps)
-        app = application as MainApp
+        setContentView(R.layout.activity_maps)
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         presenter = EditLocationPresenter(this)
-        toolbar.title = title
-        setSupportActionBar(toolbar)
-        mapView2.onCreate(savedInstanceState)
-        mapView2.getMapAsync {
+        mapFragment.getMapAsync {
             map = it
-            configureMap()
+            map.setOnMarkerDragListener(this)
+            map.setOnMarkerClickListener(this)
+            presenter.doConfigureMap(map)
         }
     }
 
-    override fun onMarkerClick(marker:Marker):Boolean {
-       return presenter.doMarkerClick(marker)
+    override fun onMarkerDragStart(marker: Marker) {}
+
+    override fun onMarkerDrag(marker: Marker) {}
+
+    override fun onMarkerDragEnd(marker: Marker) {
+        presenter.doUpdateLocation(marker.position.latitude, marker.position.longitude)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mapView2.onDestroy()
+    override fun onBackPressed() {
+        presenter.doSave()
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView2.onLowMemory()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mapView2.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mapView2.onResume()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        mapView2.onSaveInstanceState(outState)
-    }
-
-    fun configureMap() {
-        presenter.doConfigureMap()
+    override fun onMarkerClick(marker: Marker): Boolean {
+        presenter.doUpdateMarker(marker)
+        return false
     }
 }

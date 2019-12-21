@@ -1,38 +1,48 @@
 package views.editLocation
 
-import com.example.hillfort.helpers.readImageFromPath
-import com.example.hillfort.main.MainApp
+import android.content.Intent
+import com.example.hillfort.models.Location
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.content_hillfort_maps.*
+import views.Base.BasePresenter
+import views.Base.BaseView
 
-class EditLocationPresenter(val view: EditLocationView) {
-    var app: MainApp
+class EditLocationPresenter(view: BaseView) : BasePresenter(view) {
+
+    var location = Location()
 
     init {
-        app = view.application as MainApp
+        location = view.intent.extras?.getParcelable<Location>("location")!!
     }
 
-    fun doConfigureMap(){
-        view.map.uiSettings.setZoomControlsEnabled(true)
-        app.users.findAllHillforts(app.currentUser).forEach {
-            val loc = LatLng(it.location.lat, it.location.lng)
-            val options = MarkerOptions().title(it.title).position(loc)
-            view.map.addMarker(options).tag = it.id
-            view.map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.location.zoom))
-            view.map.setOnMarkerClickListener(view)
-        }
+    fun doConfigureMap(map: GoogleMap) {
+        val loc = LatLng(location.lat, location.lng)
+        val options = MarkerOptions()
+            .title("Placemark")
+            .snippet("GPS : " + loc.toString())
+            .draggable(true)
+            .position(loc)
+        map.addMarker(options)
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
     }
 
-    fun doMarkerClick(marker: Marker): Boolean{
-        view.textViewTitle.text = marker.title
-        val hillfort = app.users.findHillfortById(app.currentUser, marker.tag.toString().toLong())
-        if (hillfort != null){
-            view.textViewDescription.text = hillfort.description
-            view.imageView.setImageBitmap(readImageFromPath(view, hillfort.image[0]))
-        }
-        return false
+    fun doUpdateLocation(lat: Double, lng: Double) {
+        location.lat = lat
+        location.lng = lng
+    }
+
+    fun doSave() {
+        val resultIntent = Intent()
+        resultIntent.putExtra("location", location)
+        view?.setResult(0, resultIntent)
+        view?.finish()
+    }
+
+    fun doUpdateMarker(marker: Marker) {
+        val loc = LatLng(location.lat, location.lng)
+        marker.setSnippet("GPS : " + loc.toString())
     }
 }

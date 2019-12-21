@@ -17,6 +17,7 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import views.Base.BasePresenter
 import views.Base.BaseView
+import views.editLocation.EditLocationView
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -191,7 +192,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
             location.zoom = hillfort.location.zoom
         }
         //starts up the map activity
-        view?.startActivityForResult(view?.intentFor<MapsView>()?.putExtra("location", location), LOCATION_REQUEST)
+        view?.startActivityForResult(view?.intentFor<EditLocationView>()?.putExtra("location", location), LOCATION_REQUEST)
     }
 
     override fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
