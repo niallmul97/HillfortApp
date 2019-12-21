@@ -14,4 +14,5 @@ interface UserStore {
     fun deleteHillfort(user: UserModel, hillfort: HillfortModel)
     fun login(password: String, email: String): Boolean
     fun findByEmail(email: String): UserModel?
+    fun findHillfortById(user: UserModel, id: Long): HillfortModel?
 }
