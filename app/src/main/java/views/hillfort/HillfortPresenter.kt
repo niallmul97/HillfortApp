@@ -13,12 +13,15 @@ import com.example.hillfort.main.MainApp
 import com.example.hillfort.models.HillfortModel
 import com.example.hillfort.models.Location
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import helpers.checkLocationPermissions
+import helpers.createDefaultLocationRequest
 import helpers.isPermissionGranted
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.activity_hillfort.hillFortVisited
@@ -47,7 +50,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
     var map: GoogleMap? = null
     var defaultLocation = Location(52.245696, -7.139102, 15f)
     var locationService: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(view)
-
+    val locationRequest = createDefaultLocationRequest()
 
     init {
         app = view.application as MainApp
@@ -59,11 +62,6 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
             view.btnDeleteImage.visibility = View.VISIBLE
             view.notes.setText(hillfort.notes)
             view.showHillfort(hillfort)
-
-            //checks if a location is set, if so, then the location view is made visible
-            if (view.hillfortLocation != null){
-                view.hillFortLocationMap.visibility = View.VISIBLE
-            }
 
             //checks if hillfort has been visted
             if (hillfort.visited) {
@@ -248,6 +246,21 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
     fun doSetCurrentLocation() {
         locationService.lastLocation.addOnSuccessListener {
             locationUpdate(it.latitude, it.longitude)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun doResartLocationUpdates() {
+        var locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                if (locationResult != null && locationResult.locations != null) {
+                    val l = locationResult.locations.last()
+                    locationUpdate(l.latitude, l.longitude)
+                }
+            }
+        }
+        if (!edit) {
+            locationService.requestLocationUpdates(locationRequest, locationCallback, null)
         }
     }
 

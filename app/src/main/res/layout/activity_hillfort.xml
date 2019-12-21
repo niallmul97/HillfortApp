@@ -55,22 +55,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/hillfortLocation"
-                android:layout_width="379dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/rounded_button"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:stateListAnimator="@null"
-                android:text="@string/button_location"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/hillFortLocationMap" />
-
             <EditText
                 android:id="@+id/hillfortTitle"
                 android:layout_width="395dp"
@@ -87,7 +71,7 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/hillfortLocation" />
+                app:layout_constraintTop_toBottomOf="@+id/hillFortLocationMap" />
 
             <EditText
                 android:id="@+id/hillfortDescription"

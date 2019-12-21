@@ -63,9 +63,6 @@ class HillfortView :  BaseView(), AnkoLogger {
         //when the add image button is clicked, opens the image picker
         chooseImage.setOnClickListener {presenter.doSelectImage()}
 
-        //when the set location button is pressed
-        hillfortLocation.setOnClickListener {presenter.doSetLocation()}
-
         //if the visited box is checked
         hillFortVisited.setOnClickListener{presenter.doHillfortVisited()}
 
@@ -73,6 +70,8 @@ class HillfortView :  BaseView(), AnkoLogger {
         hillFortLocationMap.getMapAsync {
             map = it
             presenter.doConfigureMap(map)
+            it.setOnMapClickListener { presenter.doSetLocation() }
+
         }
     }
 
@@ -181,6 +180,7 @@ class HillfortView :  BaseView(), AnkoLogger {
     override fun onResume() {
         super.onResume()
         hillFortLocationMap.onResume()
+        presenter.doResartLocationUpdates()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
