@@ -33,8 +33,7 @@ class HillfortListView : BaseView(), HillfortListener {
 
         app = MainApp()
         //creates toolbar
-        toolbar.title = title
-        super.init(toolbar)
+        super.init(toolbar, false)
 
         //recycle viewer is used to display all hillforts
         val layoutManager = LinearLayoutManager(this)
