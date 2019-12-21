@@ -28,7 +28,6 @@ class MapsPresenter(view: BaseView) : BasePresenter(view) {
         val tag = marker.tag as Long
         val hillforts = app.users.findHillfortById(app.currentUser, tag)
         if (hillforts != null) view?.showHillfort(hillforts)
-
     }
 
     fun loadPlacemarks() {

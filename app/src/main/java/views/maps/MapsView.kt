@@ -31,7 +31,7 @@ class MapsView : BaseView(), GoogleMap.OnMarkerClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hillfort_maps)
-        super.init(toolbar)
+        super.init(toolbar, true)
 
         presenter = initPresenter (MapsPresenter(this)) as MapsPresenter
 
@@ -45,8 +45,16 @@ class MapsView : BaseView(), GoogleMap.OnMarkerClickListener {
 
     override fun showHillfort(hillfort: HillfortModel) {
         textViewTitle.text = hillfort.title
-        textViewDescription.text = hillfort.description
-        imageView.setImageBitmap(readImageFromPath(this, hillfort.image[0]))
+        if (hillfort.description.isNotEmpty()){
+            textViewDescription.text = hillfort.description
+        }
+        else if(hillfort.image.isNotEmpty()){
+            imageView.setImageBitmap(readImageFromPath(this, hillfort.image[0]))
+        }
+        else{
+            textViewDescription.text = ""
+            imageView.setImageBitmap(null)
+        }
     }
 
     override fun showHillforts(hillforts: List<HillfortModel>) {
