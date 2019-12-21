@@ -23,7 +23,7 @@ import org.jetbrains.anko.toast
 import com.example.hillfort.models.HillfortModel
 import com.example.hillfort.models.Location
 import com.google.android.gms.common.internal.safeparcel.SafeParcelReader
-import kotlinx.android.synthetic.main.activity_hillfort.hillFortLocationDisplay
+import com.google.android.gms.maps.GoogleMap
 import kotlinx.android.synthetic.main.activity_hillfort.hillFortVisited
 import kotlinx.android.synthetic.main.activity_hillfort.hillfortDescription
 import kotlinx.android.synthetic.main.activity_hillfort.hillfortTitle
@@ -40,7 +40,9 @@ import java.util.*
 class HillfortView :  BaseView(), AnkoLogger {
 
     var hillfort = HillfortModel()
+    lateinit var map: GoogleMap
     lateinit var presenter: HillfortPresenter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,11 +63,16 @@ class HillfortView :  BaseView(), AnkoLogger {
         //when the add image button is clicked, opens the image picker
         chooseImage.setOnClickListener {presenter.doSelectImage()}
 
-        //when the set location button is pressed
-        hillfortLocation.setOnClickListener {presenter.doSetLocation()}
-
         //if the visited box is checked
         hillFortVisited.setOnClickListener{presenter.doHillfortVisited()}
+
+        hillFortLocationMap.onCreate(savedInstanceState);
+        hillFortLocationMap.getMapAsync {
+            map = it
+            presenter.doConfigureMap(map)
+            it.setOnMapClickListener { presenter.doSetLocation() }
+
+        }
     }
 
     override fun showHillfort(hillfort: HillfortModel){
@@ -73,7 +80,6 @@ class HillfortView :  BaseView(), AnkoLogger {
         hillfortDescription.setText(hillfort.description)
         hillFortDateVisited.setText(hillfort.dateVisited)
         var strLocation = "Latitude: " + hillfort.location.lat.toString() + "\nLongitude: " +hillfort.location.lng.toString() + "\nZoom: " +hillfort.location.zoom.toString()
-        hillFortLocationDisplay.setText(strLocation)
         notes.setText(hillfort.notes)
         if (hillfort.visited){
             hillFortVisited.isChecked
@@ -154,6 +160,32 @@ class HillfortView :  BaseView(), AnkoLogger {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        hillFortLocationMap.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        hillFortLocationMap.onLowMemory()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        hillFortLocationMap.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        hillFortLocationMap.onResume()
+        presenter.doResartLocationUpdates()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        hillFortLocationMap.onSaveInstanceState(outState)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

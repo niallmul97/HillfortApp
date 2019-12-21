@@ -1,5 +1,6 @@
 package views.hillfort
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -11,12 +12,28 @@ import com.example.hillfort.helpers.showImagePicker
 import com.example.hillfort.main.MainApp
 import com.example.hillfort.models.HillfortModel
 import com.example.hillfort.models.Location
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import helpers.checkLocationPermissions
+import helpers.createDefaultLocationRequest
+import helpers.isPermissionGranted
 import kotlinx.android.synthetic.main.activity_hillfort.*
+import kotlinx.android.synthetic.main.activity_hillfort.hillFortVisited
+import kotlinx.android.synthetic.main.activity_hillfort.hillfortDescription
+import kotlinx.android.synthetic.main.activity_hillfort.hillfortTitle
+import kotlinx.android.synthetic.main.card_hillfort.*
 import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import views.Base.BasePresenter
 import views.Base.BaseView
+import views.Base.VIEW
 import views.editLocation.EditLocationView
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -30,6 +47,10 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
     var edit = false
     var checkDate = false
     val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH )
+    var map: GoogleMap? = null
+    var defaultLocation = Location(52.245696, -7.139102, 15f)
+    var locationService: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(view)
+    val locationRequest = createDefaultLocationRequest()
 
     init {
         app = view.application as MainApp
@@ -40,11 +61,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
             view.hillfortDescription.setText(hillfort.description)
             view.btnDeleteImage.visibility = View.VISIBLE
             view.notes.setText(hillfort.notes)
-
-            //checks if a location is set, if so, then the location view is made visible
-            if (view.hillfortLocation != null){
-                view.hillFortLocationDisplay.visibility = View.VISIBLE
-            }
+            view.showHillfort(hillfort)
 
             //checks if hillfort has been visted
             if (hillfort.visited) {
@@ -97,10 +114,41 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
 
             //formatting the location for cleaner presentation
             var strLocation = "Latitude: " + hillfort.location.lat.toString() + "\nLongitude: " +hillfort.location.lng.toString() + "\nZoom: " +hillfort.location.zoom.toString()
-            view.hillFortLocationDisplay.text = strLocation
 
             view.showHillfort(hillfort)
+        }else {
+            hillfort.location.lat = defaultLocation.lat
+            hillfort.location.lng = defaultLocation.lng
+            if (checkLocationPermissions(view)) {
+                doSetCurrentLocation()
+            }
         }
+    }
+
+    override fun doRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        if (isPermissionGranted(requestCode, grantResults)) {
+            doSetCurrentLocation()
+        } else {
+            // permissions denied, so use the default location
+            locationUpdate(defaultLocation.lat, defaultLocation.lng)
+        }
+    }
+
+    fun doConfigureMap(m: GoogleMap) {
+        map = m
+        locationUpdate(hillfort.location.lat, hillfort.location.lng)
+    }
+
+    fun locationUpdate(lat: Double, lng: Double) {
+        hillfort.location.lat = lat
+        hillfort.location.lng = lng
+        hillfort.location.zoom = 15f
+        map?.clear()
+        map?.uiSettings?.setZoomControlsEnabled(true)
+        val options = MarkerOptions().title(hillfort.title).position(LatLng(hillfort.location.lat, hillfort.location.lng))
+        map?.addMarker(options)
+        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(hillfort.location.lat, hillfort.location.lng), hillfort.location.zoom))
+        view?.showHillfort(hillfort)
     }
 
     fun doAddOrSave(title: String, description: String, notes: String, date: String) {
@@ -192,7 +240,28 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
             location.zoom = hillfort.location.zoom
         }
         //starts up the map activity
-        view?.startActivityForResult(view?.intentFor<EditLocationView>()?.putExtra("location", location), LOCATION_REQUEST)
+        view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, "location", Location(hillfort.location.lat, hillfort.location.lng, hillfort.location.zoom))
+    }
+    @SuppressLint("MissingPermission")
+    fun doSetCurrentLocation() {
+        locationService.lastLocation.addOnSuccessListener {
+            locationUpdate(it.latitude, it.longitude)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun doResartLocationUpdates() {
+        var locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                if (locationResult != null && locationResult.locations != null) {
+                    val l = locationResult.locations.last()
+                    locationUpdate(l.latitude, l.longitude)
+                }
+            }
+        }
+        if (!edit) {
+            locationService.requestLocationUpdates(locationRequest, locationCallback, null)
+        }
     }
 
     override fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -212,9 +281,9 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
                     hillfort.location.lat = location.lat
                     hillfort.location.lng = location.lng
                     hillfort.location.zoom = location.zoom
+                    locationUpdate(hillfort.location.lat, hillfort.location.lng)
                     var strLocation = "Latitude: " + hillfort.location.lat.toString() + "\nLongitude: " +hillfort.location.lng.toString() + "\nZoom: " +hillfort.location.zoom.toString()
-                    view?.hillFortLocationDisplay?.text = strLocation
-                    view?.hillFortLocationDisplay?.visibility = View.VISIBLE
+                    view!!.hillFortLocationMap.visibility = View.VISIBLE
                     if(edit)
                         view?.showHillfort(hillfort)
                 }

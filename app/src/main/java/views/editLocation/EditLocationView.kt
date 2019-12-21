@@ -3,8 +3,6 @@ package views.editLocation
 import android.os.Bundle
 import com.google.android.gms.maps.GoogleMap
 import com.example.hillfort.R
-import com.example.hillfort.models.HillfortModel
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Marker
 import views.Base.BaseView
