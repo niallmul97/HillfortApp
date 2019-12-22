@@ -1,7 +1,7 @@
 package views.Base
 
 import android.content.Intent
-import com.example.hillfort.main.MainApp
+import main.MainApp
 
 open class BasePresenter(var view: BaseView?) {
 

@@ -1,40 +1,24 @@
 package views.hillfort
 
 import android.content.Intent
-import android.opengl.Visibility
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.View.*
-import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import com.example.hillfort.R
-import com.example.hillfort.helpers.readImage
 import com.example.hillfort.helpers.readImageFromPath
-import com.example.hillfort.helpers.showImagePicker
-import com.example.hillfort.main.MainApp
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import com.example.hillfort.models.HillfortModel
-import com.example.hillfort.models.Location
-import com.google.android.gms.common.internal.safeparcel.SafeParcelReader
 import com.google.android.gms.maps.GoogleMap
 import kotlinx.android.synthetic.main.activity_hillfort.hillFortVisited
 import kotlinx.android.synthetic.main.activity_hillfort.hillfortDescription
 import kotlinx.android.synthetic.main.activity_hillfort.hillfortTitle
-import kotlinx.android.synthetic.main.card_hillfort.*
-import org.jetbrains.anko.intentFor
 import views.Base.BaseView
-import views.hillfort.HillfortPresenter
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class HillfortView :  BaseView(), AnkoLogger {

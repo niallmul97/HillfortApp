@@ -4,19 +4,19 @@ import android.content.Intent
 import android.os.Parcelable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.example.hillfort.main.MainApp
 import com.example.hillfort.models.HillfortModel
 import org.jetbrains.anko.AnkoLogger
 import views.editLocation.EditLocationView
 import views.hillfort.HillfortView
 import views.hillfortList.HillfortListView
+import views.login.LoginView
 import views.maps.MapsView
 
 val IMAGE_REQUEST = 1
 val LOCATION_REQUEST = 2
 
 enum class VIEW {
-    LOCATION, HILLFORT, MAPS, LIST
+    LOCATION, HILLFORT, MAPS, LIST, LOGIN
 }
 
 abstract class BaseView() : AppCompatActivity(), AnkoLogger {
@@ -30,6 +30,7 @@ abstract class BaseView() : AppCompatActivity(), AnkoLogger {
             VIEW.HILLFORT -> intent = Intent(this, HillfortView::class.java)
             VIEW.MAPS -> intent = Intent(this, MapsView::class.java)
             VIEW.LIST -> intent = Intent(this, HillfortListView::class.java)
+            VIEW.LOGIN -> intent = Intent(this, LoginView::class.java)
         }
         if (key != "") {
             intent.putExtra(key, value)

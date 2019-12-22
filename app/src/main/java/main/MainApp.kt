@@ -1,8 +1,8 @@
-package com.example.hillfort.main
+package main
 
 import android.app.Application
 import com.example.hillfort.models.UserModel
-import models.UserJSONStore
+import models.json.UserJSONStore
 import models.UserStore
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info

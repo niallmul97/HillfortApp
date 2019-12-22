@@ -3,13 +3,9 @@ package views.settings
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.hillfort.R
-import com.example.hillfort.main.MainApp
+import main.MainApp
 import kotlinx.android.synthetic.main.activity_settings.*
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.toast
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 class SettingsView : AppCompatActivity(), AnkoLogger {
 

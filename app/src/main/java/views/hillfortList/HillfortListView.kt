@@ -3,7 +3,6 @@ package views.hillfortList
 import adapters.HillfortAdapter
 import adapters.HillfortListener
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,10 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hillfort.R
 import views.login.LoginView
 import views.settings.SettingsView
-import com.example.hillfort.main.MainApp
+import main.MainApp
 import com.example.hillfort.models.HillfortModel
 import com.example.hillfort.models.UserModel
-import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
