@@ -3,8 +3,9 @@ package views.login
 import android.os.Bundle
 import android.view.View
 import com.example.hillfort.R
+import com.example.hillfort.models.UserModel
+import com.google.firebase.auth.FirebaseAuth
 import main.MainApp
-
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.toast
 import views.Base.BaseView
@@ -13,6 +14,7 @@ class LoginView : BaseView() {
 
     lateinit var presenter: LoginPresenter
     lateinit var app: MainApp
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +22,7 @@ class LoginView : BaseView() {
         progressBar.visibility = View.GONE
         presenter = initPresenter(LoginPresenter(this)) as LoginPresenter
         app = MainApp()
+        auth = FirebaseAuth.getInstance()
 
         //when the login button is pressed
         buttonLogin.setOnClickListener{
@@ -29,14 +32,7 @@ class LoginView : BaseView() {
                 toast("Please provide email + password")
             }
             else {
-                //boolean to try and find the user with the email entered
-                val currentUser = app.users.findByEmail(email)
-
-                //if the return is true, then that user is the current user and said user's hillfort list is displayed
-                if (currentUser != null){
-                    app.currentUser = currentUser
-                    presenter.doLogin(email,password)
-                }
+                presenter.doLogin(email,password)
             }
         }
 
@@ -48,14 +44,7 @@ class LoginView : BaseView() {
                 toast("Please provide email + password")
             }
             else {
-                //boolean to try and find the user with the email entered
-                var currentUser = app.users.findByEmail(email)
-
-                //if the return is true, then that user is the current user and said user's hillfort list is displayed
-                if (currentUser != null){
-                    app.currentUser = currentUser
-                    presenter.doRegister(email,password)
-                }
+                presenter.doRegister(email,password)
             }
         }
     }
