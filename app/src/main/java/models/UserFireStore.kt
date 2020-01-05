@@ -95,11 +95,11 @@ class UserFireStore// When created see if json file exists and load it
 
     override fun createHillfort(user: UserModel, hillfort: HillfortModel) {
         hillfort.id = generateRandomId()
-        val key = db.child("users").child(user.fbId).child("hillForts").push().key
+        val key = db.child("users").child(user.fbId).child("hillforts").push().key
         key?.let {
             hillfort.fbId = key
             user.hillforts.add(hillfort)
-            db.child("users").child(user.fbId).child("hillForts").setValue(user.hillforts)
+            db.child("users").child(user.fbId).child("hillforts").setValue(user.hillforts)
         }
         uploadImage(user, hillfort)
     }
@@ -122,7 +122,7 @@ class UserFireStore// When created see if json file exists and load it
             foundHillfort.location.lng = hillfort.location.lng
             foundHillfort.location.zoom = hillfort.location.zoom
             logAllHillforts(user)
-            db.child("users").child(user.fbId).child("hillForts").setValue(user.hillforts)
+            db.child("users").child(user.fbId).child("hillforts").setValue(user.hillforts)
             uploadImage(user, hillfort)
         }
     }
@@ -157,11 +157,9 @@ class UserFireStore// When created see if json file exists and load it
                 return@hillfortFind
             }
         }
-
         if(hillfortLocation == -1){
             return
         }
-
         hillfort.image.forEachIndexed { index: Int, it: String ->
             if (it  != "" || it != "content://") {
                 val fileName = File(it)
@@ -174,14 +172,13 @@ class UserFireStore// When created see if json file exists and load it
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                     val data = baos.toByteArray()
                     val uploadTask = imageRef.putBytes(data)
-                    val addOnSuccessListener: Any = uploadTask.addOnFailureListener {
+                    uploadTask.addOnFailureListener {
                         info(it.message)
                     }.addOnSuccessListener { taskSnapshot: UploadTask.TaskSnapshot ->
                         taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
-                            db.child("users").child(user.fbId).child("hillForts").child(hillfortLocation.toString()).child("images").child(index.toString()).setValue(it.toString())
+                            db.child("users").child(user.fbId).child("hillforts").child(hillfortLocation.toString()).child("image").child(index.toString()).setValue(it.toString())
                         }
                     }
-                    addOnSuccessListener
                 }
             }
         }
