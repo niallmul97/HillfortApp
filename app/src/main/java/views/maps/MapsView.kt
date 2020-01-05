@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.bumptech.glide.Glide
 import com.example.hillfort.R
 import com.example.hillfort.helpers.readImageFromPath
 import com.example.hillfort.models.HillfortModel
@@ -31,7 +32,7 @@ class MapsView : BaseView(), GoogleMap.OnMarkerClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hillfort_maps)
-        super.init(toolbar)
+        super.init(toolbar, true)
 
         presenter = initPresenter (MapsPresenter(this)) as MapsPresenter
 
@@ -45,8 +46,16 @@ class MapsView : BaseView(), GoogleMap.OnMarkerClickListener {
 
     override fun showHillfort(hillfort: HillfortModel) {
         textViewTitle.text = hillfort.title
-        textViewDescription.text = hillfort.description
-        imageView.setImageBitmap(readImageFromPath(this, hillfort.image[0]))
+        if (hillfort.description.isNotEmpty()){
+            textViewDescription.text = hillfort.description
+        }
+        else if(hillfort.image.isNotEmpty()){
+            Glide.with(this).load(hillfort.image[0]).into(imageView)
+        }
+        else{
+            textViewDescription.text = ""
+            imageView.setImageBitmap(null)
+        }
     }
 
     override fun showHillforts(hillforts: List<HillfortModel>) {

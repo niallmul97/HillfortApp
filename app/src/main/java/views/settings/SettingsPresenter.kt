@@ -1,6 +1,6 @@
 package views.settings
 
-import com.example.hillfort.main.MainApp
+import main.MainApp
 import kotlinx.android.synthetic.main.activity_settings.*
 import org.jetbrains.anko.toast
 import java.text.SimpleDateFormat

@@ -1,37 +1,59 @@
 package views.login
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
 import com.example.hillfort.R
-import com.example.hillfort.main.MainApp
 import com.example.hillfort.models.UserModel
-
+import com.google.firebase.auth.FirebaseAuth
+import main.MainApp
 import kotlinx.android.synthetic.main.activity_login.*
-import models.generateRandomId
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
-import views.hillfortList.HillfortListView
+import views.Base.BaseView
 
-class LoginView : AppCompatActivity(), AnkoLogger {
+class LoginView : BaseView() {
 
-    lateinit var app : MainApp
     lateinit var presenter: LoginPresenter
+    lateinit var app: MainApp
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        app = application as MainApp
-        presenter = LoginPresenter(this)
+        progressBar.visibility = View.GONE
+        presenter = initPresenter(LoginPresenter(this)) as LoginPresenter
+        app = MainApp()
+        auth = FirebaseAuth.getInstance()
 
         //when the login button is pressed
         buttonLogin.setOnClickListener{
-            presenter.doLogin()
+            val email = editEmail.text.toString()
+            val password = editPassword.text.toString()
+            if (email == "" || password == "") {
+                toast("Please provide email + password")
+            }
+            else {
+                presenter.doLogin(email,password)
+            }
         }
 
         //when the register button is pressed
         buttonRegister.setOnClickListener{
-            presenter.doRegister()
+            val email = editEmail.text.toString()
+            val password = editPassword.text.toString()
+            if (email == "" || password == "") {
+                toast("Please provide email + password")
+            }
+            else {
+                presenter.doRegister(email,password)
+            }
         }
+    }
+
+    override fun showProgress() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    override fun hideProgress() {
+        progressBar.visibility = View.GONE
     }
 }

@@ -1,9 +1,6 @@
 package views.maps
 
-import android.app.Activity
-import android.content.Intent
 import com.example.hillfort.models.HillfortModel
-import com.example.hillfort.models.Location
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -19,16 +16,14 @@ class MapsPresenter(view: BaseView) : BasePresenter(view) {
         hillforts.forEach {
             val loc = LatLng(it.location.lat, it.location.lng)
             val options = MarkerOptions().title(it.title).position(loc)
-            map.addMarker(options).tag = it.id
+            map.addMarker(options).tag = it
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.location.zoom))
         }
     }
 
     fun doMarkerSelected(marker: Marker) {
-        val tag = marker.tag as Long
-        val hillforts = app.users.findHillfortById(app.currentUser, tag)
+        val hillforts = marker.tag as HillfortModel
         if (hillforts != null) view?.showHillfort(hillforts)
-
     }
 
     fun loadPlacemarks() {

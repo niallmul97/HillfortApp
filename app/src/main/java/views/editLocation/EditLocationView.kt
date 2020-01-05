@@ -5,6 +5,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.example.hillfort.R
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Marker
+import kotlinx.android.synthetic.main.activity_hillfort_maps.*
+import kotlinx.android.synthetic.main.activity_maps.*
 import views.Base.BaseView
 
 class EditLocationView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener {
@@ -15,6 +17,7 @@ class EditLocationView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.O
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+        super.init(toolbarMaps, true)
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         presenter = EditLocationPresenter(this)
         mapFragment.getMapAsync {
