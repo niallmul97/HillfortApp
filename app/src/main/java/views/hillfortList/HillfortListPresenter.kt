@@ -1,8 +1,6 @@
 package views.hillfortList
 
-import adapters.HillfortAdapter
 import com.example.hillfort.models.HillfortModel
-import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import views.Base.BasePresenter
 import views.Base.BaseView
 import views.Base.VIEW

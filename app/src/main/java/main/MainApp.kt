@@ -1,8 +1,10 @@
-package com.example.hillfort.main
+package main
 
 import android.app.Application
 import com.example.hillfort.models.UserModel
-import models.UserJSONStore
+import com.google.firebase.auth.FirebaseUser
+import models.UserFireStore
+import models.json.UserJSONStore
 import models.UserStore
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -14,7 +16,8 @@ class MainApp : Application(), AnkoLogger {
 
     override fun onCreate() {
         super.onCreate()
-        users = UserJSONStore(applicationContext)
+        //users = UserJSONStore(applicationContext)
+        users = UserFireStore(applicationContext)
         info("Hillfort App started")
     }
 }

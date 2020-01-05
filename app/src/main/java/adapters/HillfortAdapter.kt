@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.hillfort.R
 import com.example.hillfort.helpers.readImageFromPath
 import com.example.hillfort.models.HillfortModel
@@ -49,7 +50,7 @@ class HillfortAdapter(
             itemView.hillFortLocationDisplay.text = strLocation
             itemView.hillFortVisited.isChecked = hillfort.visited
             if (hillfort.image.size > 0){
-                itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, hillfort.image[0]))
+                Glide.with(itemView.context).load(hillfort.image[0]).into(itemView.imageIcon)
             }
             else if (hillfort.image.size == 0){
                 itemView.imageIcon.visibility = View.INVISIBLE
