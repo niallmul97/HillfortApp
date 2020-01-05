@@ -1,43 +1,33 @@
-package models.json
+package models
 
 import android.content.Context
 import com.example.hillfort.models.UserModel
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
-import helpers.read
-import helpers.write
 import org.jetbrains.anko.AnkoLogger
 import com.example.hillfort.models.HillfortModel
 import com.google.firebase.auth.FirebaseUser
-import helpers.exists
-import models.UserStore
+import com.google.firebase.database.*
 import org.jetbrains.anko.info
 import java.util.*
 
-val JSON_FILE = "users.json"
-val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
-val listType = object : TypeToken<java.util.ArrayList<UserModel>>() {}.type
+
+lateinit var db: DatabaseReference
 
 fun generateRandomId(): String {
     return Random().toString()
 }
 
-class UserJSONStore : UserStore, AnkoLogger {
+class UserFireStore// When created see if json file exists and load it
+    (val context: Context) : UserStore, AnkoLogger {
 
-    val context: Context
-    var users = mutableListOf<UserModel>()
-
-    constructor (context: Context) {
-        this.context = context
-        if (exists(context, JSON_FILE)) {
-            deserialize()
-        }
+    init {
+        fetchUsers{}
     }
 
-    override fun login(password: String, email: String): Boolean{
-        val user = findByEmail(email)
+    var users = mutableListOf<UserModel>()
 
+
+    override fun login(email: String, password: String): Boolean{
+        val user = findByEmail(email)
         if (user != null){
             if (user.password == password){
                 return true
@@ -61,12 +51,18 @@ class UserJSONStore : UserStore, AnkoLogger {
     override fun create(user: UserModel) {
         user.id = generateRandomId()
         users.add(user)
-        serialize()
+        info(user)
+        val key = db.child("users").push().key
+        key?.let {
+            user.fbId = key
+            users.add(user)
+            db.child("users").child(key).setValue(user)
+        }
     }
 
     override fun delete(user: UserModel) {
         users.remove(user)
-        serialize()
+        db.child("users").child(user.fbId).removeValue()
     }
 
     override fun update(user: UserModel) {
@@ -75,23 +71,12 @@ class UserJSONStore : UserStore, AnkoLogger {
             foundUser.email = user.email
             foundUser.password = user.password
             foundUser.id = user.id
-            logAll()
-            serialize()
+            db.child("users").child(user.fbId).setValue(user)
         }
     }
 
     fun logAll() {
         users.forEach{ info("${it}") }
-    }
-
-    private fun serialize() {
-        val jsonString = gsonBuilder.toJson(users, listType)
-        write(context, JSON_FILE, jsonString)
-    }
-
-    private fun deserialize() {
-        val jsonString = read(context, JSON_FILE)
-        users = Gson().fromJson(jsonString, listType)
     }
 
     override fun findAllHillforts(user: UserModel): MutableList<HillfortModel> {
@@ -100,13 +85,17 @@ class UserJSONStore : UserStore, AnkoLogger {
 
     override fun createHillfort(user: UserModel, hillfort: HillfortModel) {
         hillfort.id = generateRandomId()
-        user.hillforts.add(hillfort)
-        serialize()
+        val key = db.child("users").child(user.fbId).child("hillForts").push().key
+        key?.let {
+            hillfort.fbId = key
+            user.hillforts.add(hillfort)
+            db.child("users").child(user.fbId).child("hillForts").setValue(user.hillforts)
+        }
     }
 
     override fun deleteHillfort(user: UserModel, hillfort: HillfortModel) {
         user.hillforts.remove(hillfort)
-        serialize()
+        db.child("users").child(user.fbId).child("hillForts").orderByChild("id").equalTo(hillfort.id.toString()).ref.removeValue()
     }
 
     override fun updateHillfort(user: UserModel, hillfort: HillfortModel) {
@@ -122,7 +111,8 @@ class UserJSONStore : UserStore, AnkoLogger {
             foundHillfort.location.lng = hillfort.location.lng
             foundHillfort.location.zoom = hillfort.location.zoom
             logAllHillforts(user)
-            serialize()
+            db.child("users").child(user.fbId).child("hillForts").setValue(user.hillforts)
+
         }
     }
 
@@ -130,7 +120,20 @@ class UserJSONStore : UserStore, AnkoLogger {
         return user.hillforts.find { hillfortModel: HillfortModel -> hillfortModel.id  == id }!!
     }
 
-    fun logAllHillforts(user: UserModel) {
+    private fun logAllHillforts(user: UserModel) {
         user.hillforts.forEach{ info("${it}") }
+    }
+
+    fun fetchUsers(usersReady: () -> Unit) {
+        val valueEventListener = object : ValueEventListener {
+            override fun onCancelled(dataSnapshot: DatabaseError) {
+            }
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                dataSnapshot!!.children.mapNotNullTo(users) { it.getValue<UserModel>(UserModel::class.java) }
+                usersReady()
+            }
+        }
+        db = FirebaseDatabase.getInstance().reference
+        db.child("users").addListenerForSingleValueEvent(valueEventListener)
     }
 }

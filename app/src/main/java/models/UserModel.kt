@@ -6,7 +6,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 @Parcelize
-data class UserModel(var id: Long = 0,
+data class UserModel(var id: String = "",
+                     var fbId : String = "",
                      var email: String = "",
                      var password: String = "",
                      var hillforts: ArrayList<HillfortModel> = ArrayList()): Parcelable
