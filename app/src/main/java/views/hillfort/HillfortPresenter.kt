@@ -59,6 +59,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
             view.btnDeleteImage.visibility = View.VISIBLE
             view.notes.setText(hillfort.notes)
             view.showHillfort(hillfort)
+            view.ratingBar.rating = hillfort.rating.toFloat()
             if (hillfort.favourite){
                 view.favourites.isChecked = true
             }
@@ -151,12 +152,13 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
         view?.showHillfort(hillfort)
     }
 
-    fun doAddOrSave(title: String, description: String, notes: String, date: String, rating: Double) {
+    fun doAddOrSave(title: String, description: String, notes: String, date: String, rating: Double, favourite: Boolean) {
         hillfort.title = title
         hillfort.description = description
         hillfort.notes = notes
         hillfort.dateVisited = date
         hillfort.rating = rating
+        hillfort.favourite = favourite
         if (edit) {
             //if user is editing a hillfort, then update
             app.users.updateHillfort(app.currentUser, hillfort.copy())
@@ -207,7 +209,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
     fun doIterateImage(){
         //if there are images in a hillfort iterate the image index changing the image displayed
         if (hillfort.image.size != 0){
-            imageIndex+=1
+            imageIndex+=2
 
             //if the user gets to the end of the list, go back to the start of the list
             if (imageIndex == hillfort.image.size){

@@ -141,7 +141,7 @@ class HillfortView :  BaseView(), AnkoLogger {
                     //if validation is successful the "date" is set as the date visited
                     if (checkDate){
                         hillfort.dateVisited = date
-                        presenter.doAddOrSave(hillfortTitle.text.toString(), hillfortDescription.text.toString(), notes.text.toString(), hillFortDateVisited.text.toString(), ratingBar.numStars.toDouble())
+                        presenter.doAddOrSave(hillfortTitle.text.toString(), hillfortDescription.text.toString(), notes.text.toString(), hillFortDateVisited.text.toString(), ratingBar.rating.toDouble(), favourites.isChecked.toString().toBoolean())
                     } else
                     //otherwise add a valid date
                         toast("Please enter a valid date")
@@ -149,7 +149,7 @@ class HillfortView :  BaseView(), AnkoLogger {
                     //if hillfort isn't visited, date defaults to "" and text field is gone
                     hillFortDateVisited.visibility = GONE
                     hillfort.dateVisited = ""
-                    presenter.doAddOrSave(hillfortTitle.text.toString(), hillfortDescription.text.toString(), notes.text.toString(), hillFortDateVisited.text.toString(), ratingBar.numStars.toDouble())
+                    presenter.doAddOrSave(hillfortTitle.text.toString(), hillfortDescription.text.toString(), notes.text.toString(), hillFortDateVisited.text.toString(), ratingBar.rating.toDouble(), favourites.isChecked.toString().toBoolean())
                 }
             }
         }
