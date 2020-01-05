@@ -75,7 +75,7 @@ class HillfortListView : BaseView(), HillfortListener {
             R.id.item_add -> presenter.doAddHillfort()
 
             //when the map button is pressed, the hillfort map activity is started
-            R.id.item_map -> presenter.doShowHillfortsMap()
+            R.id.item_star -> presenter.getFavourites()
 
             //when the logout option is pressed, the current user is no longer the current user and the login activity is started
             R.id.logout ->{
