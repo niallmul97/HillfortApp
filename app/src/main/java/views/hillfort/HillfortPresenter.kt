@@ -6,10 +6,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.hillfort.R
-import views.maps.MapsView
 import com.example.hillfort.helpers.readImageFromPath
 import com.example.hillfort.helpers.showImagePicker
-import com.example.hillfort.main.MainApp
+import main.MainApp
 import com.example.hillfort.models.HillfortModel
 import com.example.hillfort.models.Location
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -27,14 +26,11 @@ import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.activity_hillfort.hillFortVisited
 import kotlinx.android.synthetic.main.activity_hillfort.hillfortDescription
 import kotlinx.android.synthetic.main.activity_hillfort.hillfortTitle
-import kotlinx.android.synthetic.main.card_hillfort.*
 import org.jetbrains.anko.info
-import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import views.Base.BasePresenter
 import views.Base.BaseView
 import views.Base.VIEW
-import views.editLocation.EditLocationView
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.bumptech.glide.Glide
 import com.example.hillfort.R
 import com.example.hillfort.helpers.readImageFromPath
 import com.example.hillfort.models.HillfortModel
@@ -49,7 +50,7 @@ class MapsView : BaseView(), GoogleMap.OnMarkerClickListener {
             textViewDescription.text = hillfort.description
         }
         else if(hillfort.image.isNotEmpty()){
-            imageView.setImageBitmap(readImageFromPath(this, hillfort.image[0]))
+            Glide.with(this).load(hillfort.image[0]).into(imageView)
         }
         else{
             textViewDescription.text = ""

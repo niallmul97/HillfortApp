@@ -1,4 +1,4 @@
-package models
+package models.json
 
 import android.content.Context
 import com.example.hillfort.models.UserModel
@@ -8,9 +8,10 @@ import com.google.gson.reflect.TypeToken
 import helpers.read
 import helpers.write
 import org.jetbrains.anko.AnkoLogger
-import com.example.hillfort.helpers.*
 import com.example.hillfort.models.HillfortModel
+import com.google.firebase.auth.FirebaseUser
 import helpers.exists
+import models.UserStore
 import org.jetbrains.anko.info
 import java.util.*
 
@@ -18,8 +19,8 @@ val JSON_FILE = "users.json"
 val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
 val listType = object : TypeToken<java.util.ArrayList<UserModel>>() {}.type
 
-fun generateRandomId(): Long {
-    return Random().nextLong()
+fun generateRandomId(): String {
+    return Random().toString()
 }
 
 class UserJSONStore : UserStore, AnkoLogger {
@@ -34,7 +35,7 @@ class UserJSONStore : UserStore, AnkoLogger {
         }
     }
 
-    override fun login(email: String, password: String): Boolean{
+    override fun login(password: String, email: String): Boolean{
         val user = findByEmail(email)
 
         if (user != null){
@@ -49,8 +50,12 @@ class UserJSONStore : UserStore, AnkoLogger {
         return users
     }
 
-    override fun findByEmail(email: String): UserModel? {
+    override fun findByEmail(email: String?): UserModel? {
         return users.find { user -> user.email == email }
+    }
+
+    override fun findById(id: String): UserModel? {
+        return users.find { user -> user.id == id }
     }
 
     override fun create(user: UserModel) {
@@ -121,7 +126,7 @@ class UserJSONStore : UserStore, AnkoLogger {
         }
     }
 
-    override fun findHillfortById(user: UserModel, id: Long): HillfortModel {
+    override fun findHillfortById(user: UserModel, id: String): HillfortModel {
         return user.hillforts.find { hillfortModel: HillfortModel -> hillfortModel.id  == id }!!
     }
 
