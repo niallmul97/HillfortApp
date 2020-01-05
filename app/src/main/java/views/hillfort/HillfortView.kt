@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.*
+import com.bumptech.glide.Glide
 import com.example.hillfort.R
 import com.example.hillfort.helpers.readImageFromPath
 import kotlinx.android.synthetic.main.activity_hillfort.*
@@ -73,7 +74,7 @@ class HillfortView :  BaseView(), AnkoLogger {
             hillFortDateVisited.visibility = INVISIBLE
         }
         if(hillfort.image.size != 0){
-            hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image[0]))
+            Glide.with(this).load(hillfort.image[0]).into(hillfortImage);
             hillfortImage.visibility = VISIBLE
         }else {
             hillfortImage.visibility = GONE

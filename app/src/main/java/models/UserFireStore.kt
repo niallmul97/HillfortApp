@@ -1,16 +1,25 @@
 package models
 
 import android.content.Context
+import android.graphics.Bitmap
+import com.example.hillfort.helpers.readImageFromPath
 import com.example.hillfort.models.UserModel
 import org.jetbrains.anko.AnkoLogger
 import com.example.hillfort.models.HillfortModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import org.jetbrains.anko.info
+import java.io.ByteArrayOutputStream
+import java.io.File
 import java.util.*
 
-
+lateinit var userId: String
 lateinit var db: DatabaseReference
+lateinit var st: StorageReference
 
 fun generateRandomId(): String {
     return Random().toString()
@@ -24,6 +33,7 @@ class UserFireStore// When created see if json file exists and load it
     }
 
     var users = mutableListOf<UserModel>()
+    var imageIndex = 0
 
 
     override fun login(email: String, password: String): Boolean{
@@ -91,6 +101,7 @@ class UserFireStore// When created see if json file exists and load it
             user.hillforts.add(hillfort)
             db.child("users").child(user.fbId).child("hillForts").setValue(user.hillforts)
         }
+        uploadImage(user, hillfort)
     }
 
     override fun deleteHillfort(user: UserModel, hillfort: HillfortModel) {
@@ -112,7 +123,7 @@ class UserFireStore// When created see if json file exists and load it
             foundHillfort.location.zoom = hillfort.location.zoom
             logAllHillforts(user)
             db.child("users").child(user.fbId).child("hillForts").setValue(user.hillforts)
-
+            uploadImage(user, hillfort)
         }
     }
 
@@ -133,7 +144,46 @@ class UserFireStore// When created see if json file exists and load it
                 usersReady()
             }
         }
+        st = FirebaseStorage.getInstance().reference
         db = FirebaseDatabase.getInstance().reference
         db.child("users").addListenerForSingleValueEvent(valueEventListener)
+    }
+
+    fun uploadImage(user: UserModel, hillfort: HillfortModel) {
+        var hillfortLocation = -1
+        user.hillforts.forEachIndexed hillfortFind@ { index, thisHillfort ->
+            if(hillfort == thisHillfort){
+                hillfortLocation = index
+                return@hillfortFind
+            }
+        }
+
+        if(hillfortLocation == -1){
+            return
+        }
+
+        hillfort.image.forEachIndexed { index: Int, it: String ->
+            if (it  != "" || it != "content://") {
+                val fileName = File(it)
+                val imageName = fileName.getName()
+                var imageRef = st.child(user.fbId + '/' + imageName)
+                val baos = ByteArrayOutputStream()
+                val bitmap = readImageFromPath(context, it)
+
+                bitmap?.let {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                    val data = baos.toByteArray()
+                    val uploadTask = imageRef.putBytes(data)
+                    val addOnSuccessListener: Any = uploadTask.addOnFailureListener {
+                        info(it.message)
+                    }.addOnSuccessListener { taskSnapshot: UploadTask.TaskSnapshot ->
+                        taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
+                            db.child("users").child(user.fbId).child("hillForts").child(hillfortLocation.toString()).child("images").child(index.toString()).setValue(it.toString())
+                        }
+                    }
+                    addOnSuccessListener
+                }
+            }
+        }
     }
 }
