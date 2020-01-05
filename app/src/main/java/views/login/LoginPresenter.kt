@@ -1,5 +1,6 @@
 package views.login
 
+import com.example.hillfort.models.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import main.MainApp
 import org.jetbrains.anko.toast
@@ -19,7 +20,6 @@ class LoginPresenter(view: BaseView) : BasePresenter(view) {
         view?.showProgress()
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(view!!) { task ->
             if (task.isSuccessful) {
-                var XDLOOKOVERHERE = auth.currentUser?.email
                 app.currentUser = app.users.findByEmail(auth.currentUser?.email)!!
                 view?.navigateTo(VIEW.LIST)
             } else {
@@ -33,6 +33,10 @@ class LoginPresenter(view: BaseView) : BasePresenter(view) {
         view?.showProgress()
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(view!!) { task ->
             if (task.isSuccessful) {
+                var user = UserModel()
+                user.email = email
+                user.password = password
+                app.users.create(user)
                 app.currentUser = app.users.findByEmail(auth.currentUser?.email)!!
                 view?.navigateTo(VIEW.LIST)
             } else {

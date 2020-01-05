@@ -124,7 +124,7 @@ class UserFireStore// When created see if json file exists and load it
         user.hillforts.forEach{ info("${it}") }
     }
 
-    private fun fetchUsers(usersReady: () -> Unit) {
+    fun fetchUsers(usersReady: () -> Unit) {
         val valueEventListener = object : ValueEventListener {
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }

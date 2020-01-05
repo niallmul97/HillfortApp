@@ -13,11 +13,13 @@ import views.settings.SettingsView
 import main.MainApp
 import com.example.hillfort.models.HillfortModel
 import com.example.hillfort.models.UserModel
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import org.jetbrains.anko.toast
 import views.Base.BaseView
+import views.Base.VIEW
 
 class HillfortListView : BaseView(), HillfortListener {
 
@@ -61,8 +63,9 @@ class HillfortListView : BaseView(), HillfortListener {
             //when the logout option is pressed, the current user is no longer the current user and the login activity is started
             R.id.logout ->{
                 app.currentUser = UserModel()
+                FirebaseAuth.getInstance().signOut()
+                navigateTo(VIEW.LOGIN)
                 toast("Logout Successful")
-                startActivityForResult<LoginView>(0)
                 finish()
             }
 
