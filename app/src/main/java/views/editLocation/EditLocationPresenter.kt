@@ -1,5 +1,6 @@
 package views.editLocation
 
+import android.app.Activity
 import android.content.Intent
 import com.example.hillfort.models.Location
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -37,7 +38,7 @@ class EditLocationPresenter(view: BaseView) : BasePresenter(view) {
     fun doSave() {
         val resultIntent = Intent()
         resultIntent.putExtra("location", location)
-        view?.setResult(0, resultIntent)
+        view?.setResult(Activity.RESULT_OK, resultIntent)
         view?.finish()
     }
 
