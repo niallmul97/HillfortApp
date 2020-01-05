@@ -17,7 +17,9 @@ import com.google.android.gms.maps.GoogleMap
 import kotlinx.android.synthetic.main.activity_hillfort.hillFortVisited
 import kotlinx.android.synthetic.main.activity_hillfort.hillfortDescription
 import kotlinx.android.synthetic.main.activity_hillfort.hillfortTitle
+import kotlinx.android.synthetic.main.content_bottom_nav.*
 import views.Base.BaseView
+import views.BottomNavPresenter
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -51,6 +53,9 @@ class HillfortView :  BaseView(), AnkoLogger {
         //if the visited box is checked
         hillFortVisited.setOnClickListener{presenter.doHillfortVisited()}
 
+        //if favourites is checked
+        favourites.setOnClickListener{presenter.doFavourites()}
+
         hillFortLocationMap.onCreate(savedInstanceState);
         hillFortLocationMap.getMapAsync {
             map = it
@@ -64,8 +69,12 @@ class HillfortView :  BaseView(), AnkoLogger {
         hillfortTitle.setText(hillfort.title)
         hillfortDescription.setText(hillfort.description)
         hillFortDateVisited.setText(hillfort.dateVisited)
+        ratingBar.rating = hillfort.rating.toFloat()
         var strLocation = "Latitude: " + hillfort.location.lat.toString() + "\nLongitude: " +hillfort.location.lng.toString() + "\nZoom: " +hillfort.location.zoom.toString()
         notes.setText(hillfort.notes)
+        if (hillfort.favourite){
+            favourites.isChecked
+        }
         if (hillfort.visited){
             hillFortVisited.isChecked
             hillFortDateVisited.visibility = VISIBLE
@@ -132,7 +141,7 @@ class HillfortView :  BaseView(), AnkoLogger {
                     //if validation is successful the "date" is set as the date visited
                     if (checkDate){
                         hillfort.dateVisited = date
-                        presenter.doAddOrSave(hillfortTitle.text.toString(), hillfortDescription.text.toString(), notes.text.toString(), hillFortDateVisited.text.toString())
+                        presenter.doAddOrSave(hillfortTitle.text.toString(), hillfortDescription.text.toString(), notes.text.toString(), hillFortDateVisited.text.toString(), ratingBar.numStars.toDouble())
                     } else
                     //otherwise add a valid date
                         toast("Please enter a valid date")
@@ -140,7 +149,7 @@ class HillfortView :  BaseView(), AnkoLogger {
                     //if hillfort isn't visited, date defaults to "" and text field is gone
                     hillFortDateVisited.visibility = GONE
                     hillfort.dateVisited = ""
-                    presenter.doAddOrSave(hillfortTitle.text.toString(), hillfortDescription.text.toString(), notes.text.toString(), hillFortDateVisited.text.toString())
+                    presenter.doAddOrSave(hillfortTitle.text.toString(), hillfortDescription.text.toString(), notes.text.toString(), hillFortDateVisited.text.toString(), ratingBar.numStars.toDouble())
                 }
             }
         }

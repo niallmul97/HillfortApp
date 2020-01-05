@@ -126,6 +126,16 @@ class UserJSONStore : UserStore, AnkoLogger {
         }
     }
 
+    override fun findAllFavourites(user: UserModel): MutableList<HillfortModel> {
+        var favouriteList: ArrayList<HillfortModel> = ArrayList()
+        user.hillforts.forEach{
+            if (it.favourite){
+                favouriteList.add(it)
+            }
+        }
+        return favouriteList
+    }
+
     override fun findHillfortById(user: UserModel, id: String): HillfortModel {
         return user.hillforts.find { hillfortModel: HillfortModel -> hillfortModel.id  == id }!!
     }

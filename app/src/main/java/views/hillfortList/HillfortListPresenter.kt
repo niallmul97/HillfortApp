@@ -11,6 +11,10 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
         view?.showHillforts(app.users.findAllHillforts(app.currentUser))
     }
 
+    fun getFavourites(){
+        view?.showHillforts(app.users.findAllFavourites(app.currentUser))
+    }
+
     fun doAddHillfort(){
         view?.navigateTo(VIEW.HILLFORT)
     }

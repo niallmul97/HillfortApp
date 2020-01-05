@@ -2,6 +2,7 @@ package views.hillfort
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.media.Rating
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -58,6 +59,9 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
             view.btnDeleteImage.visibility = View.VISIBLE
             view.notes.setText(hillfort.notes)
             view.showHillfort(hillfort)
+            if (hillfort.favourite){
+                view.favourites.isChecked = true
+            }
 
             //checks if hillfort has been visted
             if (hillfort.visited) {
@@ -147,11 +151,12 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
         view?.showHillfort(hillfort)
     }
 
-    fun doAddOrSave(title: String, description: String, notes: String, date: String) {
+    fun doAddOrSave(title: String, description: String, notes: String, date: String, rating: Double) {
         hillfort.title = title
         hillfort.description = description
         hillfort.notes = notes
         hillfort.dateVisited = date
+        hillfort.rating = rating
         if (edit) {
             //if user is editing a hillfort, then update
             app.users.updateHillfort(app.currentUser, hillfort.copy())
@@ -225,6 +230,12 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
         else
         //if checked its visible
             view?.hillFortDateVisited?.visibility = View.VISIBLE
+    }
+
+    fun doFavourites(){
+        if (view!!.favourites.isChecked){
+            hillfort.favourite = true
+        }
     }
 
     fun doSetLocation(){

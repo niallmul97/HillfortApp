@@ -93,6 +93,16 @@ class UserFireStore// When created see if json file exists and load it
         return user.hillforts
     }
 
+    override fun findAllFavourites(user: UserModel): MutableList<HillfortModel> {
+        var favouriteList: ArrayList<HillfortModel> = ArrayList()
+        user.hillforts.forEach{
+            if (it.favourite){
+                favouriteList.add(it)
+            }
+        }
+        return favouriteList
+    }
+
     override fun createHillfort(user: UserModel, hillfort: HillfortModel) {
         hillfort.id = generateRandomId()
         val key = db.child("users").child(user.fbId).child("hillforts").push().key
@@ -118,6 +128,8 @@ class UserFireStore// When created see if json file exists and load it
             foundHillfort.visited = hillfort.visited
             foundHillfort.dateVisited = hillfort.dateVisited
             foundHillfort.notes = hillfort.notes
+            foundHillfort.rating = hillfort.rating
+            foundHillfort.favourite = hillfort.favourite
             foundHillfort.location.lat = hillfort.location.lat
             foundHillfort.location.lng = hillfort.location.lng
             foundHillfort.location.zoom = hillfort.location.zoom
