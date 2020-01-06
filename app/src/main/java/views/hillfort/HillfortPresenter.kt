@@ -149,7 +149,9 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view){
         val options = MarkerOptions().title(hillfort.title).position(LatLng(hillfort.location.lat, hillfort.location.lng))
         map?.addMarker(options)
         map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(hillfort.location.lat, hillfort.location.lng), hillfort.location.zoom))
-        view?.showHillfort(hillfort)
+        if(edit){
+            view?.showHillfort(hillfort)
+        }
     }
 
     fun doAddOrSave(title: String, description: String, notes: String, date: String, rating: Double, favourite: Boolean) {

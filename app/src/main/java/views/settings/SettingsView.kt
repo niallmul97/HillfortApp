@@ -42,8 +42,6 @@ class SettingsView : BaseView(), AnkoLogger {
             bottomNav.toSettings()
         }
 
-
-
         //displays the users email
         presenter.doShowEmail()
 

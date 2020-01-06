@@ -35,16 +35,12 @@ class MapsView : BaseView(), GoogleMap.OnMarkerClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hillfort_maps)
         super.init(toolbar, true)
-
         presenter = initPresenter (MapsPresenter(this)) as MapsPresenter
-
-
-
         mapView2.onCreate(savedInstanceState);
         mapView2.getMapAsync {
             map = it
             map.setOnMarkerClickListener(this)
-            presenter.loadPlacemarks()
+            presenter.loadHillforts()
         }
     }
 
