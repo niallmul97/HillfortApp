@@ -1,4 +1,4 @@
-package com.example.hillfort.activities
+package views
 
 import android.content.Intent
 import android.os.Bundle

@@ -33,17 +33,17 @@
         android:layout_below="@id/appBarLayout"
         android:layout_marginTop="56dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/hillFortLocationMap"
@@ -141,8 +141,6 @@
                 android:layout_width="157dp"
                 android:layout_height="38dp"
                 android:layout_marginStart="28dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="28dp"
                 android:buttonTint="@color/colorPrimary"
                 android:maxLength="25"
                 android:maxLines="1"
@@ -150,7 +148,6 @@
                 android:text="@string/checkboxHillFortVisited"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/notes"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -173,7 +170,7 @@
                 android:textColorHint="@color/colorPrimary"
                 android:textSize="14sp"
                 android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@+id/notes"
+                app:layout_constraintBottom_toTopOf="@+id/favourites"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.425"
                 app:layout_constraintStart_toEndOf="@+id/hillFortVisited"
@@ -183,7 +180,6 @@
                 android:id="@+id/notes"
                 android:layout_width="395dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="160dp"
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="@string/notes"
@@ -191,9 +187,32 @@
                 android:padding="8dp"
                 android:textColor="@color/colorPrimary"
                 android:textColorHint="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/favourites" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/notes" />
+
+            <CheckBox
+                android:id="@+id/favourites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:buttonTint="@color/colorPrimary"
+                android:text="Favourites"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.089"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hillFortVisited" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

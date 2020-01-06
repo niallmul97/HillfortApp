@@ -11,12 +11,13 @@ import views.hillfort.HillfortView
 import views.hillfortList.HillfortListView
 import views.login.LoginView
 import views.maps.MapsView
+import views.settings.SettingsView
 
 val IMAGE_REQUEST = 1
 val LOCATION_REQUEST = 2
 
 enum class VIEW {
-    LOCATION, HILLFORT, MAPS, LIST, LOGIN
+    LOCATION, HILLFORT, MAPS, LIST, LOGIN, SETTINGS
 }
 
 abstract class BaseView() : AppCompatActivity(), AnkoLogger {
@@ -31,6 +32,7 @@ abstract class BaseView() : AppCompatActivity(), AnkoLogger {
             VIEW.MAPS -> intent = Intent(this, MapsView::class.java)
             VIEW.LIST -> intent = Intent(this, HillfortListView::class.java)
             VIEW.LOGIN -> intent = Intent(this, LoginView::class.java)
+            VIEW.SETTINGS  -> intent = Intent(this, SettingsView::class.java)
         }
         if (key != "") {
             intent.putExtra(key, value)

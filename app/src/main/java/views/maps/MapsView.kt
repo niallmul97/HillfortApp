@@ -20,8 +20,10 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.activity_hillfort_maps.*
 import kotlinx.android.synthetic.main.activity_maps.*
+import kotlinx.android.synthetic.main.content_bottom_nav.*
 import kotlinx.android.synthetic.main.content_hillfort_maps.*
 import views.Base.BaseView
+import views.BottomNavPresenter
 import views.hillfortList.HillfortListPresenter
 
 class MapsView : BaseView(), GoogleMap.OnMarkerClickListener {
@@ -33,14 +35,12 @@ class MapsView : BaseView(), GoogleMap.OnMarkerClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hillfort_maps)
         super.init(toolbar, true)
-
         presenter = initPresenter (MapsPresenter(this)) as MapsPresenter
-
         mapView2.onCreate(savedInstanceState);
         mapView2.getMapAsync {
             map = it
             map.setOnMarkerClickListener(this)
-            presenter.loadPlacemarks()
+            presenter.loadHillforts()
         }
     }
 

@@ -5,17 +5,22 @@ import android.os.Bundle
 import com.example.hillfort.R
 import main.MainApp
 import kotlinx.android.synthetic.main.activity_settings.*
+import kotlinx.android.synthetic.main.content_bottom_nav.*
 import org.jetbrains.anko.AnkoLogger
+import views.Base.BaseView
+import views.BottomNavPresenter
 
-class SettingsView : AppCompatActivity(), AnkoLogger {
+class SettingsView : BaseView(), AnkoLogger {
 
     lateinit var app : MainApp
     lateinit var presenter: SettingsPresenter
+    lateinit var bottomNav: BottomNavPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = application as MainApp
         presenter = SettingsPresenter(this)
+        bottomNav = initPresenter(BottomNavPresenter(this)) as BottomNavPresenter
         setContentView(R.layout.activity_settings)
 
         //toolbar is setup
@@ -24,6 +29,18 @@ class SettingsView : AppCompatActivity(), AnkoLogger {
 
         //up button activated
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        item_home.setOnClickListener(){
+            bottomNav.toHome()
+        }
+
+        item_map.setOnClickListener(){
+            bottomNav.toMaps()
+        }
+
+        item_settings.setOnClickListener(){
+            bottomNav.toSettings()
+        }
 
         //displays the users email
         presenter.doShowEmail()

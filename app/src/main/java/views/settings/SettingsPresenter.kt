@@ -3,11 +3,12 @@ package views.settings
 import main.MainApp
 import kotlinx.android.synthetic.main.activity_settings.*
 import org.jetbrains.anko.toast
+import views.Base.BasePresenter
+import views.Base.BaseView
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SettingsPresenter(val view: SettingsView) {
-    var app: MainApp
+class SettingsPresenter(view: BaseView) : BasePresenter(view) {
     val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH )
 
     init {
@@ -19,18 +20,18 @@ class SettingsPresenter(val view: SettingsView) {
         var newPassword = ""
 
         //if the password in the text field is not the same as the current user's current password
-        if (view.displayPassword.text.toString() != app.currentUser.password){
+        if (view!!.displayPassword.text.toString() != app.currentUser.password){
 
             //then the newPassword is equal to what is in the text field
-            newPassword = view.displayPassword.text.toString()
+            newPassword = view!!.displayPassword.text.toString()
 
             //so log as the newPassword isn't "", the newPassword is set and the user is updated
             if (newPassword != ""){
                 app.currentUser.password = newPassword
                 app.users.update(app.currentUser)
-                view.toast("Password Updated")
-            }else view.toast("Please enter a valid password")
-        }else view.toast("Please enter a different password to your current one")
+                view!!.toast("Password Updated")
+            }else view!!.toast("Please enter a valid password")
+        }else view!!.toast("Please enter a different password to your current one")
     }
 
     fun doUpdateEmail(){
@@ -38,10 +39,10 @@ class SettingsPresenter(val view: SettingsView) {
         var newEmail = ""
 
         //so long as the email in the text field is not the same as the current user's current email
-        if (view.displayEmail.text.toString() != app.currentUser.email){
+        if (view!!.displayEmail.text.toString() != app.currentUser.email){
 
             //that email in the the text field is the aforementioned "newEmail"
-            newEmail = view.displayEmail.text.toString()
+            newEmail = view!!.displayEmail.text.toString()
 
             //if the newEmail is not ""
             if (newEmail != ""){
@@ -52,16 +53,16 @@ class SettingsPresenter(val view: SettingsView) {
                     //then current user's email is updated to the newEmail
                     app.currentUser.email = newEmail
                     app.users.update(app.currentUser)
-                    view.toast("Email updated")
+                    view!!.toast("Email updated")
 
                     //otherwise a user with that email already exists
-                } else view.toast("A user with that email already exists")
+                } else view!!.toast("A user with that email already exists")
 
                 //the email entered was ""
-            }else view.toast("Please enter a valid email")
+            }else view!!.toast("Please enter a valid email")
 
             //the email entered was the same as the current one
-        }else view.toast("Please enter a different email to your current one")
+        }else view!!.toast("Please enter a different email to your current one")
     }
 
     fun doRecentAndOldestVisits(){
@@ -100,20 +101,20 @@ class SettingsPresenter(val view: SettingsView) {
                 }
             }
             //displays the newest date
-            view.displayMostRecentlyVisited.setText("Most Recent Hillfort Visit: "+newestVisited)
+            view!!.displayMostRecentlyVisited.setText("Most Recent Hillfort Visit: "+newestVisited)
 
             //displays the oldest date
-            view.displayOldestVisited.setText("Oldest Hillfort Visit: "+oldestVisited)
+            view!!.displayOldestVisited.setText("Oldest Hillfort Visit: "+oldestVisited)
 
         }else{
             //otherwise display that the newest and oldest dates are N/A
-            view.displayMostRecentlyVisited.setText("Most Recent Hillfort Visit: N/A")
-            view.displayOldestVisited.setText("Oldest Hillfort Visit: N/A")
+            view!!.displayMostRecentlyVisited.setText("Most Recent Hillfort Visit: N/A")
+            view!!.displayOldestVisited.setText("Oldest Hillfort Visit: N/A")
         }
     }
 
     fun doTotalHillforts(){
-        view.displayTotalHillforts.setText("Total Hillforts: "+ app.currentUser.hillforts.size)
+        view!!.displayTotalHillforts.setText("Total Hillforts: "+ app.currentUser.hillforts.size)
     }
 
     fun doTotalImages(){
@@ -126,7 +127,7 @@ class SettingsPresenter(val view: SettingsView) {
         }
 
         //displays the amount of images
-        view.displayTotalImages.setText("Total Images: "+imageCount)
+        view!!.displayTotalImages.setText("Total Images: "+imageCount)
     }
 
     fun doTotalVisits(){
@@ -141,14 +142,14 @@ class SettingsPresenter(val view: SettingsView) {
         }
 
         //display the number of visited hillforts
-        view.displayTotalHillfortsVisited.setText("Total Hillforts Visited: " +visitedCount)
+        view!!.displayTotalHillfortsVisited.setText("Total Hillforts Visited: " +visitedCount)
     }
 
     fun doShowPassword(){
-        view.displayPassword.setText(app.currentUser.password)
+        view!!.displayPassword.setText(app.currentUser.password)
     }
 
     fun doShowEmail(){
-        view.displayEmail.setText(app.currentUser.email)
+        view!!.displayEmail.setText(app.currentUser.email)
     }
 }

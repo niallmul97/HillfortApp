@@ -153,4 +153,15 @@
         app:layout_constraintStart_toEndOf="@+id/displayPassword"
         app:layout_constraintTop_toBottomOf="@+id/updateEmail" />
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_anchorGravity="start|bottom"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <include layout="@layout/content_bottom_nav" />
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

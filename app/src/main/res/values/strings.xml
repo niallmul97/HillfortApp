@@ -29,4 +29,5 @@
     <string name="title_activity_hillfort_list">Hillfort App</string>
     <string name="title_activity_hillfort">Hillfort App</string>
     <string name="title_activity_edit_location">Hillfort App</string>
+    <string name="menu_star">menu_star</string>
 </resources>

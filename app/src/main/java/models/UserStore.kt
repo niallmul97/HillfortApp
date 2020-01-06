@@ -17,4 +17,5 @@ interface UserStore {
     fun login(email: String, password: String): Boolean
     fun findByEmail(email: String?): UserModel?
     fun findHillfortById(user: UserModel, id: String): HillfortModel?
+    fun findAllFavourites(user: UserModel): MutableList<HillfortModel>
 }

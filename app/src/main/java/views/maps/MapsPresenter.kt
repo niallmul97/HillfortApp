@@ -26,7 +26,7 @@ class MapsPresenter(view: BaseView) : BasePresenter(view) {
         if (hillforts != null) view?.showHillfort(hillforts)
     }
 
-    fun loadPlacemarks() {
+    fun loadHillforts() {
         view?.showHillforts(app.users.findAllHillforts(app.currentUser))
     }
 }
